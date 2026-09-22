@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investor Sign up — IdeaPartnerHub</title>
+  <link rel="stylesheet" href="{% static 'Style.css' %}">
+</head>
+<body>
+
+  <div class="container">
+    <nav class="navbar">
+      <!-- Django ke template tags lagaye taaki static 'index.html' se error na aaye -->
+      <a href="index.html" class="logo" style="text-decoration:none; color:inherit;">💡 IdeaPartnerHub</a>
+      <div class="links">
+        <span>How it works</span>
+        <span>For investors</span>
+        <span>For students</span>
+      </div>
+      <a href="{% url 'signup' %}" class="btn">Sign up</a>
+    </nav>
+
+    <!-- id="investor-signup-form" ko barkarar rakha hai taaki aapki purani CSS na kharab ho -->
+    <form id="investor-signup-form" method="post" action="{% url 'investor_signup' %}">
+      {% csrf_token %}
+      <h2> Sign up as an investor</h2>
+      <p style="font-size:13px; color:#5a5850; margin:6px 0 20px;">
+        Fill in these details once — you won't have to fill them again next time.
+      </p>
+
+      <!-- Django messages framework: Agar backend se koi error aati hai toh yahan dikhegi -->
+         {% if messages %}
+       <div class="messages">
+          {% for message in messages %}
+          <p class="{{ message.tags }}">{{ message }}</p>
+          {% endfor %}
+       </div>
+        {% endif %}
+
+
+      <div class="form-group">
+        <label for="name">Full name</label>
+        <!-- required tag browser se hi safety check karega -->
+        <input type="text" id="name" name="name" placeholder="Jaise: Amit Verma" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Phone number</label>
+          <input type="text" id="phone" name="phone" placeholder="10-digit number" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email (optional)</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com">
+        </div>
+      </div>
+
+      <div class="form-group">
+         <label for="password">Create Password</label>
+        <input type="password" id="password" name="password" placeholder="Minimum 6 characters" required>
+       </div>
+
+
+      <div class="form-group">
+        <label for="occupation">What do you do?</label>
+        <input type="text" id="occupation" name="occupation" placeholder="Jaise: Angel investor, Company CEO" required>
+      </div>
+
+      <div class="form-group">
+        <label for="interest_area">Which categories are you interested in?</label>
+        <select id="interest_area" name="interest_area">
+          <option value="">any once</option>
+          <option value="tech">Tech / SaaS</option>
+          <option value="ecommerce">E-commerce</option>
+          <option value="service">Service / booking</option>
+          <option value="education">Education</option>
+          <option value="health">Health</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width:100%;">Sign up and explore ideas</button>
+    </form>
+  </div>
+
+  <script src="{% static 'Main.js' %}"></script>
+  
+</body>
+</html>

@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Post Your Idea - IdeapartnerHub</title>
+        <link rel="stylesheet" href="{% static 'Style.css' %}">
+    </head>
+        <body>
+            <div class="container">
+                <nav class="navbar">
+                    <a href="{% url 'home' %}" class="logo" style="text-decoration:none; color:inherit;">IdeapartnerHub</a>
+                    <div class="links">
+                        <span>How it works</span>
+                        <span>For investors</span>
+                        <span>For students</span>
+                    </div>
+                     <a href="{% url 'signup' %}" class="btn">Sign up</a>    
+                </nav>
+                
+                <form class="form-card" id="idea-form" method="post" action="{% url 'post_idea' %}">
+                    {% csrf_token %}
+                    <h2>Post your idea</h2>
+                    <p style="font-size:13px; color:#5a5850; margin:6px 0 20px;">
+                        The clearer your details, the faster you will find the right teammate or investor.
+                    </p>
+
+                    <!-- Django error messages display block -->
+                    {% if messages %}
+                        <div class="messages" style="margin-bottom: 15px;">
+                            {% for message in messages %}
+                                <p style="color: #d9534f; font-weight: bold; margin: 5px 0;" class="{{ message.tags }}">{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="title">Idea title</label>
+                        <input type="text" id="title" name="title" placeholder="e.g., Delivery app for local grocery stores" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">What problem does your idea solve?</label>
+                        <textarea id="description" name="description" rows="3" placeholder="Briefly describe the problem and your solution" required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="stage">Stage</label>
+                            <select id="stage" name="stage">
+                                <option value="idea">Just an idea</option>
+                                <option value="prototype">Building prototype</option>
+                                <option value="mvp">MVP is ready</option>
+                                <option value="scaling">Have users, looking to scale</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" name="category">
+                                <option value="tech">Tech / SaaS</option>
+                                <option value="ecommerce">E-commerce</option>
+                                <option value="service">Service / booking</option>
+                                <option value="education">Education</option>
+                                <option value="health">Health</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>What help do you need?</label>
+                        <div class="tags" id="help-tags">
+                            <div class="tag" data-value="Developer">Developer</div>
+                            <div class="tag" data-value="Designer">Designer</div>
+                            <div class="tag" data-value="Marketing">Marketing</div>
+                            <div class="tag" data-value="Funding">Funding</div>
+                        </div>
+                        <!-- Yeh hidden input database (views.py) mein tags bhejne ke liye zaroori hai -->
+                        <input type="hidden" name="help_needed" id="help-needed-input">
+                        <p style="font-size:12px; color:#8a887f; margin-top:6px;">Tap to select (multiple options allowed)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Your name</label>
+                        <input type="text" id="name" name="name" placeholder="Full name" required>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="contact">Contact information</label>
+                        <input type="text" id="contact" name="contact" placeholder="Email or phone number" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width:100%;">Post idea</button>
+                 </form>
+            </div>
+
+           <script src="{% static 'Main.js' %}"></script>
+           
+           
+        </body>
+</html>

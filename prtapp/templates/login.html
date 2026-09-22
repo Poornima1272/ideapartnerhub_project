@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — IdeaPartnerHub</title>
+  <link rel="stylesheet" href="{% static 'Style.css' %}">
+</head>
+<body>
+
+  <div class="container">
+    <nav class="navbar">
+      <a href="{% url 'home' %}" class="logo" style="text-decoration:none; color:inherit;">💡 IdeaPartnerHub</a>
+      <div class="links">
+        <span>How it works</span>
+        <span>For investors</span>
+        <span>For students</span>
+      </div>
+      <a href="{% url 'signup' %}" class="btn">Sign up</a>
+    </nav>
+
+    <!-- Error/Success system alert boxes -->
+    {% if messages %}
+      <div class="messages" style="margin-top: 20px;">
+        {% for message in messages %}
+          <p class="{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form class="form-card" method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      <h2>Login to Your Account</h2>
+      <p style="font-size:13px; color:#5a5850; margin:6px 0 20px;">
+        Enter your registered email and password to continue.
+      </p>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width:100%; margin-bottom: 15px;">Login</button>
+      
+      <p style="font-size:13px; text-align:center; color:#5a5850;">
+        Don't have an account? <a href="{% url 'signup' %}" style="color:#0c447c; font-weight:600; text-decoration:none;">Sign up here</a>
+      </p>
+    </form>
+  </div>
+
+</body>
+</html>

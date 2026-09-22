@@ -1,0 +1,241 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Investor Dashboard - IdeapartnerHub</title>
+        <link rel="stylesheet" href="{% static 'Style.css' %}">
+        <style>
+            .dashbord-header{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin: 30px 0 20px;
+            }
+
+            .filter-bar{
+                display: flex;
+                gap: 12px;
+                margin-bottom: 28px;
+                flex-wrap: wrap;
+                background: #fff;
+                padding: 14px;
+                border-radius: 12px;
+                border: 1px solid #e3e1d8;
+            }
+
+            .filter-bar select, .filter-bar input{
+                padding: 9px 14px;
+                border-radius: 8px;
+                border: 1px solid #d3d1c7;
+                font-size: 13px;
+                background: #fdfcf9;
+                outline: none;
+                transition: border-color 0.15s ease;
+            }
+
+            .filter-bar select:focus, .filter-bar input:focus{
+                border-color: #0c447c;
+            }
+
+            .filter-bar input{
+                flex: 1;
+                min-width: 200px;
+            }
+
+            .idea-grid{
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 18px;
+                margin-bottom: 40px;
+            }
+
+            .idea-card{
+                background: #fff;
+                border: 1px solid #e3e1d8;
+                border-radius: 14px;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                transition: box-shadow 0.15s ease, transform 0.15s ease;
+            }
+
+            .idea-card:hover{
+                box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+                transform: translateY(-2px);
+            }
+
+            .idea-card .top-row{
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            .idea-card h3{
+                font-size: 16px;
+                line-height: 1.3;
+                color: #26241f;
+            }
+
+            .idea-card .stage-badge{
+                font-size: 11px;
+                padding: 4px 10px;
+                border-radius: 6px;
+                background: #e6f1fb;
+                color: #0c447c;
+                white-space: nowrap;
+                font-weight: 600;
+            }
+
+            .idea-card .category-badge{
+                font-size: 11px;
+                padding: 4px 10px;
+                border-radius: 6px;
+                background: #f1efe8;
+                color: #6b6858;
+                font-weight: 600;
+            }
+
+            .idea-card p.desc{
+                font-size: 13px;
+                color: #5a5850;
+                margin-bottom: 12px;
+                line-height: 1.5;
+                flex-grow: 1;
+            }
+
+            .idea-card .meta{
+                font-size: 12px;
+                color: #8a887f;
+                margin-bottom: 12px;
+            }
+
+            .idea-card .help-tags{
+                display: flex;
+                gap: 6px;
+                flex-wrap: wrap;
+                margin-bottom: 14px;
+            }
+
+            .idea-card .help-tag{
+                font-size: 11px;
+                padding: 4px 10px;
+                border-radius: 6px;
+                background: #fdf3e0;
+                color: #8a5a00;
+                font-weight: 600;
+            }
+
+            .idea-card .contact-row{
+                font-size: 12px;
+                color: #5a5850;
+                border-top: 1px solid #f0eee5;
+                padding-top: 12px;
+                margin-top: auto;
+            }
+
+            .idea-card .contact-row strong{
+                color: #26241f;
+            }
+
+            .empty-state{
+                text-align: center;
+                padding: 60px 20px;
+                color: #8a887f;
+                grid-column: 1 / -1;
+            }
+
+            @media(max-width:640px){
+                .idea-grid{ grid-template-columns: 1fr; }
+                .filter-bar{ flex-direction: column; }
+                .filter-bar input{ min-width: 100%; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Dashboard.html mein nav ke thik niche ise lagayein -->
+             {% if messages %}
+           <div class="messages">
+                {% for message in messages %}
+                <!-- class="{{ message.tags }}" automatic 'success' ya 'error' print karega -->
+                <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <nav class="navbar">
+                <a href="{% url 'home' %}" class="logo" style="text-decoration:none; color:inherit;">IdeapartnerHub</a>
+                <div class="links">
+                    <span>How it works</span>
+                    <span>For investors</span>
+                    <span>For students</span>
+                </div>
+                <a href="{% url 'signup' %}" class="btn">Sign up</a>
+            </nav>
+
+            <div class="dashbord-header">
+                <div>
+                    <h2>Investor Dashboard</h2>
+                    <p style="font-size:13px; color:#5a5850; margin-top:4px;">Browse new ideas from students and explore interesting projects.</p>
+                </div>
+            </div>
+
+            <div class="filter-bar">
+                <select id="filter-category">
+                    <option value="">All categories</option>
+                    {% for value, label in category_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <select id="filter-stage">
+                    <option value="">All stages</option>
+                    {% for value, label in stage_choices %}
+                        <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" id="filter-search" placeholder="Search ideas...">
+            </div>
+
+            <div class="idea-grid">
+                {% for idea in ideas %}
+                <div class="idea-card" data-category="{{ idea.category }}" data-stage="{{ idea.stage }}">
+                    <div class="top-row">
+                        <h3>{{ idea.title }}</h3>
+                        <span class="stage-badge">{{ idea.get_stage_display }}</span>
+                    </div>
+                    <p class="desc">{{ idea.description }}</p>
+                    <div class="meta">
+                        {{ idea.name }} · <span class="category-badge">{{ idea.get_category_display }}</span>
+                        {% if idea.college %} · {{ idea.college }}{% endif %}
+                    </div>
+                    {% if idea.help_needed_list %}
+                    <div class="help-tags">
+                        {% for tag in idea.help_needed_list %}
+                            <span class="help-tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <!-- Dashboard.html ke contact row ko isse replace karein -->
+                <div class="contact-row" style="display: flex; justify-content: space-between; align-items: center;">
+                      <span>Managed via <strong>Hub Admin</strong></span>
+    
+                      <!-- Yeh button click hote hi ek form submit karega -->
+                    <form method="POST" action="{% url 'express_interest' idea.id %}" style="margin: 0;">
+                    {% csrf_token %}
+                        <button type="submit" class="btn btn-primary" style="padding: 6px 12px; font-size: 12px;">Express Interest</button>
+                    </form>
+                </div>
+
+                {% empty %}
+                    <p class="empty-state">No ideas have been posted yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+        <script src="{% static 'Main.js' %}"></script>
+        <script src="{% static 'Dashboard.js' %}"></script>
+    </body>
+</html>

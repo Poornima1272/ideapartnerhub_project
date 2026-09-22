@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find a Teammate — IdeaPartnerHub</title>
+  <link rel="stylesheet" href="{% static 'Style.css' %}">
+</head>
+<body>
+
+  <div class="container">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <a href="{% url 'home' %}" class="logo" style="text-decoration:none; color:inherit;">💡 IdeaPartnerHub</a>
+      <div class="links">
+        <span>How it works</span>
+        <span>For investors</span>
+        <span>For students</span>
+      </div>
+      <a href="{% url 'signup' %}" class="btn">Sign up</a>
+    </nav>
+
+    <!-- Django Messages Framework: Form submit hone par Green/Red Message yahan dikhega -->
+    {% if messages %}
+      <div class="messages" style="margin-top: 20px;">
+        {% for message in messages %}
+          <p class="{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Main Registration Form Block -->
+    <form class="form-card" method="POST" action="{% url 'find_team_register' %}">
+      {% csrf_token %}
+      <h2>Find Your Dream Team</h2>
+      <p style="font-size:13px; color:#5a5850; margin:6px 0 20px;">
+        Fill in your skills and requirements. Our admin team will find and match you with the best teammates for your project or hackathon.
+      </p>
+
+      <!-- Event / Hackathon Name Input -->
+      <div class="form-group">
+        <label for="hackathon_name">Hackathon or Event Name</label>
+        <input type="text" id="hackathon_name" name="hackathon_name" placeholder="e.g., Smart India Hackathon, TechFest, or General Startup" required>
+      </div>
+
+      <!-- Skills Split Row -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="my_role">Your Main Skill / Role</label>
+          <input type="text" id="my_role" name="my_role" placeholder="e.g., Frontend Developer, UI Designer" required>
+        </div>
+        <div class="form-group">
+          <label for="looking_for">What skill are you looking for?</label>
+          <input type="text" id="looking_for" name="looking_for" placeholder="e.g., Backend Developer, Android Dev" required>
+        </div>
+      </div>
+
+      <!-- Project Description Textarea -->
+      <div class="form-group">
+        <label for="project_description">Briefly describe your project or idea (Optional)</label>
+        <textarea id="project_description" name="project_description" rows="3" placeholder="What are you planning to build?"></textarea>
+      </div>
+
+      <!-- Submit Action Button -->
+      <button type="submit" class="btn btn-primary" style="width:100%;">Register and Find Teammates</button>
+    </form>
+  </div>
+
+</body>
+</html>

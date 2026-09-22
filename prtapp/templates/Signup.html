@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign up — IdeaPartnerHub</title>
+  <link rel="stylesheet" href="{% static 'Style.css' %}">
+  <style>
+    .choose-wrap { max-width: 700px; margin: 60px auto; text-align: center; }
+    .choose-wrap h1 { font-size: 26px; margin-bottom: 8px; }
+    .choose-wrap p { color: #5a5850; margin-bottom: 40px; }
+    .role-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .role-card {
+      background: #fff; border: 1px solid #e3e1d8; border-radius: 12px;
+      padding: 30px 24px; text-decoration: none; color: inherit;
+      transition: border-color 0.15s, transform 0.15s; display: block;
+    }
+    .role-card:hover { border-color: #1a1a18; transform: translateY(-2px); }
+    .role-card .icon { font-size: 36px; margin-bottom: 14px; }
+    .role-card h3 { font-size: 17px; margin-bottom: 8px; }
+    .role-card p { font-size: 13px; color: #5a5850; margin-bottom: 0; }
+    @media (max-width: 640px) { .role-cards { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <nav class="navbar">
+      <a href="{% url 'home' %}" class="logo" style="text-decoration:none; color:inherit;">💡 IdeaPartnerHub</a>
+      <div class="links">
+        <span>How it works</span>
+        <span>For investors</span>
+        <span>For students</span>
+      </div>
+      <a href="{% url 'signup' %}" class="btn">Sign up</a>
+    </nav>
+
+    <div class="choose-wrap">
+      <h1>Who are you?</h1>
+      <p>Choose your role to get started on the right path.</p>
+
+      <div class="role-cards">
+        <a href="{% url 'student_signup' %}" class="role-card">
+          <div class="icon">🎓</div>
+          <h3>I am a Student</h3>
+          <p>I have an idea and need a team or guidance.</p>
+        </a>
+        <a href="{% url 'investor_signup' %}" class="role-card">
+          <div class="icon">💰</div>
+          <h3>I am an Investor</h3>
+          <p>I want to explore great ideas and invest.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #fdfcf9; /* OPTIONAL FIX: Original #b1a67a bohot dark khaki color tha, modern platforms ke liye creamy soft white background diya hai */
+  color: #1a1a18;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* --- NAVIGATION BAR --- */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid #d1a675;
+}
+
+.navbar .logo {
+  font-weight: 600;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.navbar .links {
+  display: flex;
+  gap: 24px;
+  font-size: 14px;
+  color: #5a5850;
+}
+
+/* --- BUTTONS --- */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #080808;
+  background: #687ec5;
+  color: #f8f3f3;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background: #1a2053;
+}
+
+.btn-primary {
+  background: #687ec5;
+  color: #fff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #15164977;
+}
+
+/* --- HOME PAGE (index.html) HERO --- */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero .badge {
+  display: inline-block;
+  background: #0b1250d8;
+  color: #ececf3e0;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.hero p {
+  color: #181716;
+  max-width: 480px;
+  margin: 0 auto 24px;
+}
+
+.hero .cta-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* --- STATS COUNTER GRID --- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 20px 0 40px;
+}
+
+.stat-card {
+  background: #dbdae0;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #e3e1d8;
+}
+
+.stat-card .number {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.stat-card .label {
+  font-size: 13px;
+  color: #0e0d0d;
+}
+
+/* --- FEATURES CARD GRID --- */
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.feature-card {
+  background: #e9e3e3;
+  border: 1px solid #e3e1d8;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.feature-card h3 {
+  font-size: 15px;
+  margin: 10px 0 6px;
+}
+
+.feature-card p {
+  font-size: 13px;
+  color: #141414;
+}
+
+/* --- GLOBAL FORM LAYOUTS (Signups & Post Idea) --- */
+.form-card {
+  background: #fff;
+  border: 1px solid #e3e1d8;
+  border-radius: 12px;
+  padding: 28px;
+  max-width: 600px;
+  margin: 40px auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  color: #5a5850;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d3d1c7;
+  font-size: 14px;
+  font-family: inherit;
+  background: #fafaf8;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+/* Form input click highlight */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #0c447c;
+  background: #fff;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* --- TAGS SELECTOR (Post-idea.html) --- */
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid #d3d1c7;
+  background: #fff;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+}
+
+.tag:hover {
+  background: #fdfcf9;
+  border-color: #a1a096;
+}
+
+/* JavaScript trigger class for highlighted tags */
+.tag.selected {
+  background: #e6f1fb;
+  border-color: #378add;
+  color: #0c447c;
+  font-weight: 500;
+}
+
+/* --- DJANGO MESSAGES STYLING --- */
+/* Purana .messages block hata kar ye naya style copy-paste karein */
+.messages {
+  margin: 20px auto;
+  max-width: 600px;
+  width: 100%;
+}
+
+.messages p {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Green Box: Success messages ke liye */
+.messages p.success {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+/* Red/Orange Box: Error/Warning messages ke liye */
+.messages p.error, .messages p.warning {
+  background-color: #fdf2f2;
+  border: 1px solid #f5c6cb;
+  color: #a32d2d;
+}
+
+
+.error-text {
+  color: #a32d2d;
+  font-size: 12px;
+  margin-top: 4px;
+  display: none;
+}
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+@media (max-width: 640px) {
+  .stats, .features, .form-row {
+    grid-template-columns: 1fr;
+  }
+  .navbar {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+  }
+}
