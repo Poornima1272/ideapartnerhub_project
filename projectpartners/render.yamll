@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: ideapartnerhub
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn projectpartners.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.5
+      - key: DJANGO_SETTINGS_MODULE
+        value: "projectpartners.settings"
