@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+
+
 from pathlib import Path
 import dj_database_url
 import os
@@ -19,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
+# See https://djangoproject.com
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-f+sx(%^4l4xk6+^ja8ca_3v%j6m0^3=6h(egf13fr!hh%=0f40"
@@ -28,7 +30,6 @@ SECRET_KEY = "django-insecure-f+sx(%^4l4xk6+^ja8ca_3v%j6m0^3=6h(egf13fr!hh%=0f40
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 
 # Application definition
@@ -45,7 +46,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # Asli CSS pipeline handler cloud ke liye
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -74,28 +75,25 @@ TEMPLATES = [
 WSGI_APPLICATION = "projectpartners.wsgi.application"
 
 
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+# Database Configuration Layer
+# Online live internet links configuration setup
+
+LIVE_DATABASE_URL = "postgresql://poornim:RrE3HhE5H1KYO0Y61BJpuPcdOZspfCpf@://render.com"
 
 if os.environ.get('DATABASE_URL'):
-     DATABASES = {
+    # Jab aapki website Render cloud par chalegi, toh yeh online default pool lega
+    DATABASES = {
         'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
     }
 else:
+    # Jab aap laptop par runserver chalaengi, toh yeh direct live cloud database se connect ho jayega!
     DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "partnersdb",
-        "USER":"root",
-        "PASSWORD":"tiger",
-        "HOST":"localhost",
-        "PORT":"3306"
+        'default': dj_database_url.parse(LIVE_DATABASE_URL)
     }
-}
 
 
 # Password validation
-# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
+# https://djangoproject.com
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -114,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
+# https://djangoproject.com
 
 LANGUAGE_CODE = "en-us"
 
@@ -125,15 +123,17 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
+# Static files compilation routing rules (CSS, JavaScript, Images)
+# https://djangoproject.com
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-# Authentication settings
+
+# Authentication system views redirects routing paths map
 LOGIN_URL = 'signup'
 LOGIN_REDIRECT_URL = 'dashboard'
-LOGOUT_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'home'  # Naming convention ke mutabik 'index' ko humne main 'home' set kiya hai
