@@ -27,11 +27,10 @@ body {
 }
 
 .navbar .logo {
-  font-weight: 600;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+ height: 45px;          /* Logo ki height aap apne hisaab se choti-badi kar sakti hain */
+width: auto;           /* Isse image stretch nahi hogi */
+object-fit: contain;
+margin-right: 15px;
 }
 
 .navbar .links {
