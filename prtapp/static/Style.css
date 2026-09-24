@@ -43,8 +43,8 @@ margin-right: 15px;
     height: 95px;          /* Logo ki height aap apne hisaab se choti-badi kar sakti hain */
     width: auto;           /* Isse image stretch nahi hogi */
     object-fit: contain;
-    margin-right: 15px;    /* Text se thodi doori banane ke liye */
-     margin-bottom: 5px;    /* Niche se center spacing */
+    margin-right: 13px;    /* Text se thodi doori banane ke liye */
+     margin-bottom: 3px;    /* Niche se center spacing */
     margin-left: 10px;     /* Left screen border se thoda gap rakhne ke liye */
 }
 
