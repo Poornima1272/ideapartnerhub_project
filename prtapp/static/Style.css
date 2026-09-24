@@ -40,7 +40,7 @@ margin-right: 15px;
 
 /* 3. Logo image ka size aur padding setting */
 .site-logo {
-    height: 75px;          /* Logo ki height aap apne hisaab se choti-badi kar sakti hain */
+    height: 95px;          /* Logo ki height aap apne hisaab se choti-badi kar sakti hain */
     width: auto;           /* Isse image stretch nahi hogi */
     object-fit: contain;
     margin-right: 15px;    /* Text se thodi doori banane ke liye */
