@@ -137,3 +137,8 @@ STATICFILES_DIRS = [
 LOGIN_URL = 'signup'
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'home'  # Naming convention ke mutabik 'index' ko humne main 'home' set kiya hai
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://ideapartnerhub-project.onrender.com',
+]
