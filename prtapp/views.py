@@ -161,10 +161,16 @@ def express_interest(request, idea_id):
 
 # Is function ko views.py ke bilkul niche add karein (agar pehle se nahi hai)
 def find_team_register(request):
+    # 1. Sabse pehle session se student dhoondhein
     student_id = request.session.get("student_id")
     student = None
     if student_id:
         student = Student.objects.filter(id=student_id).first()
+
+    # Agar user login nahi hai ya session expired hai, toh use pehle signup par bhejein (Aaditya par fallback nahi karenge)
+    if not student:
+        messages.error(request, "Teammate dhoondhne ke liye kripya pehle Student Signup/Login karein.")
+        return redirect("student_signup")
 
     if request.method == "POST":
         hackathon_name = request.POST.get("hackathon_name", "").strip()
@@ -176,23 +182,16 @@ def find_team_register(request):
             messages.error(request, "Kripya Hackathon ka naam, apni skill, aur teammate ki requirement zaroor bharein.")
             return render(request, "Find-team.html", {"student": student})
 
-        if not student:
-            student = Student.objects.first() # Testing ke liye pehla student utha rahe hain
-
-        if not student:
-            messages.error(request, "Koi student account nahi mila. Kripya pehle student register karein.")
-            return redirect("signup")
-
-        # Database (MySQL) mein save karna
+        # Database mein exact logged-in student ke sath data save hoga
         TeamFinder.objects.create(
-            student=student,
+            student=student, 
             hackathon_name=hackathon_name,
             my_role=my_role,
             looking_for=looking_for,
             project_description=project_description,
             status="looking"
         )
-        messages.success(request, "Aapki requirement save ho gayi hai! Hub Admin jald hi aapke liye sahi teammate dhoondh kar connect karega.")
+        messages.success(request, "Aapki requirement successfully save ho gayi hai!")
         return redirect("home")
 
     return render(request, "Find-team.html", {"student": student})
