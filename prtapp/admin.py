@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Idea, Student, Investor
+from .models import Idea, Student, Investor,TeamFinder
 
 
 @admin.register(Idea)
@@ -39,3 +39,17 @@ class ConnectionRequestAdmin(admin.ModelAdmin):
     def get_student_name(self, obj):
         return obj.idea.name
     get_student_name.short_description = 'Student Name'
+
+
+
+@admin.register(TeamFinder)
+class TeamFinderAdmin(admin.ModelAdmin):
+    list_display = ('get_student_name', 'hackathon_name', 'my_role', 'looking_for', 'status', 'created_at')
+    list_filter = ('status', 'created_at')
+    search_fields = ('student__name', 'hackathon_name', 'looking_for')
+    list_editable = ('status',)
+
+    def get_student_name(self, obj):
+        return obj.student.name
+    get_student_name.short_description = 'Student Name'
+
