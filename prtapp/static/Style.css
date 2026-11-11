@@ -296,6 +296,305 @@ body.iph-page {
     padding: 1.5rem;
   }
 }
+
+/* ================= ALL PAGES MODERN THEME (IDEAPARTNERHUB) ================= */
+:root {
+  --brand: #0c447c;
+  --brand-dark: #082f57;
+  --amber: #f59e0b;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --muted: #475569;
+  --line: #e2e8f0;
+  --danger: #dc2626;
+}
+
+body.iph-page {
+  font-family: 'Instrument Sans', 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.iph-page * {
+  box-sizing: border-box;
+}
+
+.iph-page h1, .iph-page h2, .iph-page h3 {
+  font-family: 'Bricolage Grotesque', 'Segoe UI', sans-serif;
+  margin-top: 0;
+  color: var(--text);
+}
+
+.iph-wrap {
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Common Navbar */
+.iph-nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.iph-nav .iph-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+.iph-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  font-family: 'Bricolage Grotesque', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--brand);
+}
+.iph-logo img {
+  height: 36px;
+}
+.iph-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.iph-nav-right a {
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Buttons */
+.iph-btn {
+  display: inline-block;
+  padding: 0.65rem 1.3rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  color: var(--text);
+  background: var(--surface);
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  text-align: center;
+}
+.iph-btn-primary {
+  background: var(--brand);
+  color: #fff !important;
+  border-color: var(--brand);
+}
+.iph-btn-primary:hover {
+  background: var(--brand-dark);
+}
+.iph-btn-danger {
+  background: var(--danger);
+  color: #fff !important;
+  border-color: var(--danger);
+}
+.iph-btn-full {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Auth & Form Cards (Login, Signup, Post-idea, Find-team) */
+.iph-form-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 20px;
+}
+.iph-form-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 2.2rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+}
+.iph-form-card.wide {
+  max-width: 680px;
+}
+.iph-form-header {
+  text-align: center;
+  margin-bottom: 1.8rem;
+}
+.iph-form-header h2 {
+  font-size: 1.75rem;
+  margin-bottom: 0.4rem;
+}
+.iph-form-header p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Automatic Styling for ALL Inputs, Selects, Textareas & Django {{ form }} */
+.iph-form-card form p {
+  margin-bottom: 1.1rem;
+}
+.iph-form-card label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.4rem;
+  color: var(--text);
+}
+.iph-form-card input[type="text"],
+.iph-form-card input[type="email"],
+.iph-form-card input[type="password"],
+.iph-form-card input[type="number"],
+.iph-form-card input[type="url"],
+.iph-form-card select,
+.iph-form-card textarea {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1.5px solid var(--line);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #f8fafc;
+  transition: border-color 0.2s, background 0.2s;
+}
+.iph-form-card input:focus,
+.iph-form-card select:focus,
+.iph-form-card textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  background: #ffffff;
+}
+.iph-form-card textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+.iph-form-footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.iph-form-footer a {
+  color: var(--brand);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Role Choice Cards (For Signup.html) */
+.iph-role-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.iph-role-box {
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.2s;
+}
+.iph-role-box:hover {
+  border-color: var(--brand);
+  background: #eff6ff;
+  transform: translateY(-2px);
+}
+.iph-role-box span {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Dashboard Layout */
+.iph-dash-main {
+  flex: 1;
+  padding: 2.5rem 0;
+}
+.iph-dash-header {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.iph-dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 1.5rem;
+}
+.iph-dash-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+.iph-tag {
+  background: #fef3c7;
+  color: #b45309;
+  padding: 0.25rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: 0.6rem;
+}
+
+/* Alerts & Errors */
+.iph-alert {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  background: #dbeafe;
+  color: var(--brand);
+}
+.iph-alert.error {
+  background: #fee2e2;
+  color: var(--danger);
+}
+
+/* Footer */
+.iph-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+@media (max-width: 600px) {
+  .iph-role-grid {
+    grid-template-columns: 1fr;
+  }
+  .iph-form-card {
+    padding: 1.5rem;
+  }
+}
 /* ================= MODERN FORM & PAGE STYLING (NO HTML CHANGE NEEDED) ================= */
 body {
   font-family: 'Instrument Sans', 'Segoe UI', system-ui, sans-serif;
