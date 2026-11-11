@@ -5,73 +5,153 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Sign up — IdeaPartnerHub</title>
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'Style.css' %}">
+  <style>
+    .stu-nav {
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .stu-nav-wrap {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .stu-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #0c447c;
+    }
+    .stu-logo img {
+      height: 36px;
+    }
+    .stu-links {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .stu-links a {
+      text-decoration: none;
+      color: #475569;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .stu-links a:hover {
+      color: #0c447c;
+    }
+    .stu-btn {
+      padding: 0.55rem 1.15rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      background: #0c447c;
+      color: #ffffff !important;
+    }
+    .stu-msg p {
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      background: #dbeafe;
+      color: #0c447c;
+      font-size: 0.9rem;
+      margin-bottom: 1.2rem;
+    }
+    .stu-msg p.error {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="container">
-    <nav class="navbar">
-      <a href="{% url 'home' %}" class="logo" style="text-decoration:none; color:inherit;">💡 IdeaPartnerHub</a>
-      <div class="links">
-        <span>How it works</span>
-        <span>For investors</span>
-        <span>For students</span>
+  <!-- Modern Navigation Bar -->
+  <nav class="stu-nav">
+    <div class="stu-nav-wrap">
+      <a href="{% url 'home' %}" class="stu-logo">
+        <img src="{% static 'images/logo.png' %}" alt="Logo">
+        <span>IdeaPartnerHub</span>
+      </a>
+
+      <div class="stu-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'login' %}">Log in</a>
+        <a href="{% url 'signup' %}" class="stu-btn">Sign up</a>
       </div>
-      <a href="{% url 'signup' %}" class="btn">Sign up</a>
-    </nav>
+    </div>
+  </nav>
 
-    <!-- Django backend messages block linked perfectly -->
-      {% if messages %}
-      <div class="messages">
-        {% for message in messages %}
-         <p class="{{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-     </div>
-      {% endif %}
+  <!-- Main Form Section -->
+  <main class="page">
+    <div class="wrap medium">
+      <form class="form-card" method="POST" action="{% url 'student_signup' %}">
+        {% csrf_token %}
+        <h1 class="form-title">Sign up as a Student</h1>
+        <p class="form-note">
+          Fill in these details once — you won't have to fill them again next time.
+        </p>
 
-     
+        <!-- Django Backend Messages -->
+        {% if messages %}
+          <div class="stu-msg">
+            {% for message in messages %}
+              <p class="{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
 
-    <form class="form-card" method="POST" action="{% url 'student_signup' %}">
-      {% csrf_token %}
-      <h2>Sign up as a student</h2>
-      <p style="font-size:13px; color:#5a5850; margin:6px 0 20px;">
-        Fill in these details once — you won't have to fill them again next time.
-      </p>
-
-      <div class="form-group">
-        <label for="name">Full name</label>
-        <input type="text" id="name" name="name" placeholder="e.g., Riya Sharma" required>
-      </div>
-
-      <div class="form-row">
         <div class="form-group">
-          <label for="phone">Phone number</label>
-          <input type="text" id="phone" name="phone" placeholder="10-digit number" required>
+          <label for="name">Full name</label>
+          <input type="text" id="name" name="name" placeholder="e.g., Riya Sharma" required>
         </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Phone number</label>
+            <input type="text" id="phone" name="phone" placeholder="10-digit number" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email (optional)</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com">
+          </div>
+        </div>
+
         <div class="form-group">
-          <label for="email">Email (optional)</label>
-          <input type="email" id="email" name="email" placeholder="you@example.com">
+          <label for="password">Create Password</label>
+          <input type="password" id="password" name="password" placeholder="Minimum 6 characters" required>
         </div>
-      </div>
-      <div class="form-group">
-         <label for="password">Create Password</label>
-         <input type="password" id="password" name="password" placeholder="Minimum 6 characters" required>
-      </div>
 
+        <div class="form-group">
+          <label for="college">College name</label>
+          <input type="text" id="college" name="college" placeholder="e.g., IIT Indore" required>
+        </div>
 
-      <div class="form-group">
-        <label for="college">College name</label>
-        <input type="text" id="college" name="college" placeholder="e.g., IIT Indore" required>
-      </div>
+        <div class="form-group">
+          <label for="skill">Your skills / areas of expertise</label>
+          <input type="text" id="skill" name="skill" placeholder="e.g., Coding, Design, Marketing">
+        </div>
 
-      <div class="form-group">
-        <label for="skill">Your skills / areas of expertise</label>
-        <input type="text" id="skill" name="skill" placeholder="e.g., Coding, Design, Marketing">
-      </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign up and post idea</button>
 
-      <button type="submit" class="btn btn-primary" style="width:100%;">Sign up and post idea</button>
-    </form>
-  </div>
-  
+        <p class="auth-switch">
+          Already have an account? <a href="{% url 'login' %}">Log in here</a>
+        </p>
+      </form>
+    </div>
+  </main>
+
 </body>
 </html>

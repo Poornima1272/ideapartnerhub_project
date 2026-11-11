@@ -4,109 +4,183 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IdeaPartnerHub — Launch Your Startup</title>
- <link rel="stylesheet" href="{% static 'Style.css' %}">
- 
- 
+  <title>IdeaPartnerHub — Find the team that builds your idea</title>
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'Style.css' %}">
 </head>
-<body>
-  
-
-  <div class="container">
-    <nav class="navbar">
-       
-      <div class="logo-box"> <img src="{% static 'images/logo.png' %}" alt="Logo" class="site-logo">
-        </div>
-      <div class="links">
-        <!-- बदलाव 1: span की जगह a टैग लगाया और href में #how-it-works दिया -->
-        <a href="#how-it-works" style="text-decoration: none; color: inherit; cursor: pointer;">How it works</a>
-        <span>For investors</span>
-        <span>For students</span>
-      </div>
-      
-      <!-- DYNAMIC BUTTONS: Checks if user is logged in or out -->
-      <div class="auth-buttons" style="display: flex; gap: 10px; align-items: center;">
+<body class="iph-home">
+ 
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="/" class="logo">
+      <img src="{% static 'images/logo.png' %}" alt="IdeaPartnerHub logo" class="site-logo">
+    </a>
+    <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false">☰</button>
+ 
+    <div class="panel">
+      <nav class="links" aria-label="Main">
+        <a href="#how-it-works">How it works</a>
+        <a href="#investors">For investors</a>
+        <a href="#ideas">For students</a>
+      </nav>
+ 
+      <div class="auth">
         {% if user.is_authenticated %}
-          <span style="font-size: 14px; color: #5a5850;">Hi, <strong>{{ user.email }}</strong></span>
-          <a href="{% url 'logout' %}" class="btn" style="background: #fdf2f2; color: #a32d2d; border-color: #f5c6cb;">Logout</a>
+          <span class="hi">Hi, <strong>{{ user.email }}</strong></span>
+          <form method="post" action="{% url 'logout' %}" style="margin:0">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Log out</button>
+          </form>
         {% else %}
-          <a href="{% url 'login' %}" class="btn">Login</a>
+          <a href="{% url 'login' %}" class="btn">Log in</a>
           <a href="{% url 'signup' %}" class="btn btn-primary">Sign up</a>
         {% endif %}
       </div>
-    </nav>
-
-    <!-- Django backend green/red messages validation alerts framework -->
-    {% if messages %}
-      <div class="messages">
-        {% for message in messages %}
-          <p class="{{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    <section class="hero">
-      <div class="badge">Made for hackathon founders</div>
-      <h1>Have the Idea, Leave the Execution to Us</h1>
-      <p>Find your team, connect with investors, and launch your startup — all in one place.</p>
-      
-      <div class="cta-group" style="flex-wrap: wrap; row-gap: 12px;">
-        <!-- Redirect hooks based on user authentication state -->
-        {% if user.is_authenticated %}
-          {% if user.student_profile %}
-            <a href="{% url 'post_idea' %}" class="btn btn-primary">Go to Idea Workspace</a>
-          {% elif user.investor_profile %}
-            <a href="{% url 'dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
-          {% endif %}
-        {% else %}
-          <a href="{% url 'student_signup' %}" class="btn btn-primary">Post Your Idea</a>
-          <a href="{% url 'investor_signup' %}" class="btn">Join as an Investor</a>
-        {% endif %}
-        
-        <a href="{% url 'find_team_register' %}" class="btn" style="border-color: #0c447c; color: #0c447c; font-weight: 500;">
-            🔍 Find a Teammate for Hackathon and projects
-        </a>
-      </div>
-    </section>
-
-    <section class="stats">
-      <div class="stat-card">
-        <div class="number">5+</div>
-        <div class="label">Joined Students</div>
-      </div>
-      <div class="stat-card">
-        <div class="number">5+</div>
-        <div class="label">Investors Ready</div>
-      </div>
-      <div class="stat-card">
-        <div class="number">5+</div>
-        <div class="label">Teams Formed</div>
-      </div>
-    </section>
-
-    <!-- बदलाव 2: यहाँ हमने id="how-it-works" और एक क्लास जोड़ दी है -->
-    <div id="how-it-works" class="how-it-works-section">
-      <h2 style="text-align:center; margin-bottom:20px;">How It Works</h2>
-      <section class="features">
-        <div class="feature-card">
-          <div style="font-size: 24px; margin-bottom: 8px;">👥</div>
-          <h3>Co-founder matching</h3>
-          <p>Find the right teammate based on skills.</p>
-        </div>
-        <div class="feature-card">
-          <div style="font-size: 24px; margin-bottom: 8px;">💰</div>
-          <h3>Investor connect</h3>
-          <p>Pitch your idea and secure funding.</p>
-        </div>
-        <div class="feature-card">
-          <div style="font-size: 24px; margin-bottom: 8px;">📈</div>
-          <h3>Growth guidance</h3>
-          <p>Grow your business with 1-to-1 mentorship.</p>
-        </div>
-      </section>
     </div>
   </div>
-
- <script src="{% static 'Main.js' %}"></script>
+</header>
+ 
+{% if messages %}
+  <div class="wrap messages">
+    {% for message in messages %}
+      <p class="{{ message.tags }}">{{ message }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
+ 
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="badge">Made for hackathon founders</span>
+        <h1>You have the idea. Find the team to build it.</h1>
+        <p class="lead">Post your startup idea, match with students who have the skills you need, and pitch to investors, all in one place.</p>
+ 
+        <div class="cta">
+          {% if user.is_authenticated %}
+            {% if user.student_profile %}
+              <a href="{% url 'post_idea' %}" class="btn btn-primary">Go to idea workspace</a>
+            {% elif user.investor_profile %}
+              <a href="{% url 'dashboard' %}" class="btn btn-primary">Go to dashboard</a>
+            {% else %}
+              <a href="{% url 'dashboard' %}" class="btn btn-primary">Go to dashboard</a>
+            {% endif %}
+          {% else %}
+            <a href="{% url 'student_signup' %}" class="btn btn-primary">Post your idea</a>
+            <a href="{% url 'investor_signup' %}" class="btn">Join as an investor</a>
+          {% endif %}
+        </div>
+        <a href="{% url 'find_team_register' %}" class="find">🔍 Find a teammate for a hackathon or project</a>
+      </div>
+ 
+      <article class="idea" aria-label="Example idea">
+        <div class="idea-top">
+          <span class="tag">EdTech</span>
+          <span class="live">Looking for teammates</span>
+        </div>
+        <h3>StudyBuddy: notes sharing for college</h3>
+        <p>An app where students swap handwritten notes and get answers from seniors.</p>
+        <div class="chips">
+          <span class="chip">React</span><span class="chip">Django</span><span class="chip">UI/UX</span>
+        </div>
+        <div class="team" aria-label="Team seats">
+          <span class="seat s1">A</span>
+          <span class="seat s2">R</span>
+          <span class="seat open">+</span>
+          <span class="seat open">+</span>
+          <small>2 of 4 seats filled</small>
+        </div>
+      </article>
+    </div>
+  </section>
+ 
+  <!-- STATS -->
+  <div class="stats">
+    <div class="wrap stats-row">
+      <div class="stat"><b>5+</b><span>Students joined</span></div>
+      <div class="stat"><b>5+</b><span>Investors ready</span></div>
+      <div class="stat"><b>5+</b><span>Teams formed</span></div>
+    </div>
+  </div>
+ 
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how-it-works">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <p class="sub">Three things the hub does for you, from the first idea to the first funding conversation.</p>
+      <div class="rows">
+        <div class="row">
+          <div class="ic">👥</div>
+          <h3>Co-founder matching</h3>
+          <p>List the skills your idea needs. We show you students who have them, and you choose who to invite.</p>
+        </div>
+        <div class="row" id="investors">
+          <div class="ic">💰</div>
+          <h3>Investor connect</h3>
+          <p>Investors browse live ideas and message founders directly. Pitch once, reach many.</p>
+        </div>
+        <div class="row">
+          <div class="ic">📈</div>
+          <h3>Growth guidance</h3>
+          <p>Get 1-to-1 mentorship to plan your MVP, your pitch, and your next steps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- FEATURED IDEAS -->
+  <section id="ideas">
+    <div class="wrap">
+      <h2>Fresh ideas looking for people</h2>
+      <p class="sub">Browse what other students are building and ask to join a team.</p>
+      <div class="grid">
+        <article class="card">
+          <span class="tag">HealthTech</span>
+          <h3>MedRemind</h3>
+          <p>Medicine reminders for elders with voice alerts in Hindi.</p>
+          <div class="meta"><span class="need">Needs: Android dev</span></div>
+        </article>
+        <article class="card">
+          <span class="tag">AgriTech</span>
+          <h3>KisanMandi</h3>
+          <p>Farmers list crops and compare mandi prices on their phone.</p>
+          <div class="meta"><span class="need">Needs: Backend, Designer</span></div>
+        </article>
+        <article class="card">
+          <span class="tag">AI</span>
+          <h3>ResumeLens</h3>
+          <p>Upload a resume and get skill-gap feedback for campus placements.</p>
+          <div class="meta"><span class="need">Needs: ML student</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- FINAL CTA -->
+  <section>
+    <div class="wrap">
+      <div class="final">
+        <h2>Your idea is ready. Post it today.</h2>
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="btn">Open dashboard</a>
+        {% else %}
+          <a href="{% url 'signup' %}" class="btn">Create free account</a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</main>
+ 
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 IdeaPartnerHub. Built for student founders.</span>
+    <nav aria-label="Footer"><a href="#">About</a><a href="#">Contact</a><a href="#">Privacy</a></nav>
+  </div>
+</footer>
+ 
+<script src="{% static 'Main.js' %}"></script>
 </body>
 </html>

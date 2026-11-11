@@ -5,67 +5,163 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Find a Teammate — IdeaPartnerHub</title>
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'Style.css' %}">
+  <style>
+    .ft-nav {
+      background: #ffffff;
+      border-bottom: 1px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .ft-nav-wrap {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .ft-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #0c447c;
+    }
+    .ft-logo img {
+      height: 36px;
+    }
+    .ft-links {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .ft-links a {
+      text-decoration: none;
+      color: #475569;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .ft-links a:hover {
+      color: #0c447c;
+    }
+    .ft-btn {
+      padding: 0.55rem 1.15rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      background: #0c447c;
+      color: #ffffff !important;
+      border: none;
+      cursor: pointer;
+    }
+    .ft-btn-danger {
+      background: #dc2626;
+    }
+    .ft-msg {
+      max-width: 680px;
+      margin: 1.5rem auto 0;
+      padding: 0 20px;
+    }
+    .ft-msg p {
+      padding: 0.85rem 1.1rem;
+      border-radius: 10px;
+      background: #dbeafe;
+      color: #0c447c;
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+    .ft-msg p.error {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="container">
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-      <a href="{% url 'home' %}" class="logo" style="text-decoration:none; color:inherit;">💡 IdeaPartnerHub</a>
-      <div class="links">
-        <span>How it works</span>
-        <span>For investors</span>
-        <span>For students</span>
+  <!-- Modern Navigation Bar -->
+  <nav class="ft-nav">
+    <div class="ft-nav-wrap">
+      <a href="{% url 'home' %}" class="ft-logo">
+        <img src="{% static 'images/logo.png' %}" alt="Logo">
+        <span>IdeaPartnerHub</span>
+      </a>
+
+      <div class="ft-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'post_idea' %}">Post Idea</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}">Dashboard</a>
+          <form method="post" action="{% url 'logout' %}" style="margin:0;">
+            {% csrf_token %}
+            <button type="submit" class="ft-btn ft-btn-danger">Log out</button>
+          </form>
+        {% else %}
+          <a href="{% url 'login' %}">Log in</a>
+          <a href="{% url 'signup' %}" class="ft-btn">Sign up</a>
+        {% endif %}
       </div>
-      <a href="{% url 'signup' %}" class="btn">Sign up</a>
-    </nav>
+    </div>
+  </nav>
 
-    <!-- Django Messages Framework: Form submit hone par Green/Red Message yahan dikhega -->
-    {% if messages %}
-      <div class="messages" style="margin-top: 20px;">
-        {% for message in messages %}
-          <p class="{{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-      </div>
-    {% endif %}
+  <!-- Django Messages -->
+  {% if messages %}
+    <div class="ft-msg">
+      {% for message in messages %}
+        <p class="{{ message.tags }}">{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
 
-    <!-- Main Registration Form Block -->
-    <form class="form-card" method="POST" action="{% url 'find_team_register' %}">
-      {% csrf_token %}
-      <h2>Find Your Dream Team</h2>
-      <p style="font-size:13px; color:#5a5850; margin:6px 0 20px;">
-        Fill in your skills and requirements. Our admin team will find and match you with the best teammates for your project or hackathon.
-      </p>
+  <!-- Main Registration Form Block -->
+  <main class="page">
+    <div class="wrap medium">
+      <form class="form-card" method="POST" action="{% url 'find_team_register' %}">
+        {% csrf_token %}
+        <h1 class="form-title">Find Your Dream Team</h1>
+        <p class="form-note">
+          Fill in your skills and requirements. Our admin team will match you with the best teammates for your project or hackathon.
+        </p>
 
-      <!-- Event / Hackathon Name Input -->
-      <div class="form-group">
-        <label for="hackathon_name">Hackathon or Event Name</label>
-        <input type="text" id="hackathon_name" name="hackathon_name" placeholder="e.g., Smart India Hackathon, TechFest, or General Startup" required>
-      </div>
-
-      <!-- Skills Split Row -->
-      <div class="form-row">
+        <!-- Event / Hackathon Name Input -->
         <div class="form-group">
-          <label for="my_role">Your Main Skill / Role</label>
-          <input type="text" id="my_role" name="my_role" placeholder="e.g., Frontend Developer, UI Designer" required>
+          <label for="hackathon_name">Hackathon or Event Name</label>
+          <input type="text" id="hackathon_name" name="hackathon_name" placeholder="e.g., Smart India Hackathon, TechFest, or General Startup" required>
         </div>
+
+        <!-- Skills Split Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="my_role">Your Main Skill / Role</label>
+            <input type="text" id="my_role" name="my_role" placeholder="e.g., Frontend Developer, UI Designer" required>
+          </div>
+          <div class="form-group">
+            <label for="looking_for">What skill are you looking for?</label>
+            <input type="text" id="looking_for" name="looking_for" placeholder="e.g., Backend Developer, Android Dev" required>
+          </div>
+        </div>
+
+        <!-- Project Description Textarea -->
         <div class="form-group">
-          <label for="looking_for">What skill are you looking for?</label>
-          <input type="text" id="looking_for" name="looking_for" placeholder="e.g., Backend Developer, Android Dev" required>
+          <label for="project_description">Briefly describe your project or idea (Optional)</label>
+          <textarea id="project_description" name="project_description" rows="3" placeholder="What are you planning to build?"></textarea>
         </div>
-      </div>
 
-      <!-- Project Description Textarea -->
-      <div class="form-group">
-        <label for="project_description">Briefly describe your project or idea (Optional)</label>
-        <textarea id="project_description" name="project_description" rows="3" placeholder="What are you planning to build?"></textarea>
-      </div>
-
-      <!-- Submit Action Button -->
-      <button type="submit" class="btn btn-primary" style="width:100%;">Register and Find Teammates</button>
-    </form>
-  </div>
+        <!-- Submit Action Button -->
+        <button type="submit" class="btn btn-primary btn-block">Register and Find Teammates</button>
+      </form>
+    </div>
+  </main>
 
 </body>
 </html>
