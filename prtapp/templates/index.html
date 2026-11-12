@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IdeaPartnerHub — Startup Landing Page</title>
+  <title>IdeaPartnerHub — Startup Studio</title>
   <link rel="preconnect" href="https://googleapis.com">
   <link rel="preconnect" href="https://gstatic.com" crossorigin>
   <link href="https://googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -12,17 +12,17 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body.ninora-theme {
-      font-family: 'Instrument Sans', sans-serif;
-      background-color: #ffffff;
-      color: #0f172a;
+      font-family: 'Instrument Sans', sans-serif !important;
+      background-color: #ffffff !important;
+      color: #0f172a !important;
       line-height: 1.6;
     }
-    h1, h2, h3 { font-family: 'Bricolage Grotesque', sans-serif; }
+    h1, h2, h3, h4 { font-family: 'Bricolage Grotesque', sans-serif !important; }
 
-    /* Dark Gradient Hero Wrapper (Matches 1st Image) */
+    /* Dark Gradient Hero */
     .hero-wrapper {
-      background: radial-gradient(circle at 80% 20%, #3b2d8b 0%, #17153b 45%, #0b0a1f 100%);
-      color: #ffffff;
+      background: radial-gradient(circle at 80% 20%, #3b2d8b 0%, #17153b 45%, #0b0a1f 100%) !important;
+      color: #ffffff !important;
       padding-bottom: 5rem;
       overflow: hidden;
     }
@@ -32,7 +32,7 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: 1.4rem 24px;
-      display: flex;
+      display: flex !important;
       justify-content: space-between;
       align-items: center;
     }
@@ -41,18 +41,17 @@
       align-items: center;
       gap: 10px;
       text-decoration: none;
-      color: #ffffff;
+      color: #ffffff !important;
       font-weight: 700;
       font-size: 1.3rem;
     }
     .n-logo img { height: 36px; border-radius: 6px; }
-    .n-links { display: flex; align-items: center; gap: 1.8rem; }
+    .n-links { display: flex !important; align-items: center; gap: 1.8rem; }
     .n-links a {
       color: #cbd5e1;
       text-decoration: none;
       font-size: 0.95rem;
       font-weight: 500;
-      transition: color 0.2s;
     }
     .n-links a:hover { color: #ffffff; }
 
@@ -64,28 +63,27 @@
       text-decoration: none;
       cursor: pointer;
       border: none;
-      display: inline-flex;
+      display: inline-flex !important;
       align-items: center;
       gap: 8px;
-      transition: transform 0.2s, background 0.2s;
+      transition: transform 0.2s;
     }
     .n-btn:hover { transform: translateY(-2px); }
-    .n-btn-white { background: #ffffff; color: #0f172a !important; }
+    .n-btn-white { background: #ffffff !important; color: #0f172a !important; }
     .n-btn-glass {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.12) !important;
       color: #ffffff !important;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2) !important;
     }
-    .n-btn-danger { background: #ef4444; color: #ffffff !important; }
+    .n-btn-danger { background: #ef4444 !important; color: #ffffff !important; }
 
-    /* Hero Content */
+    /* Hero Grid */
     .n-hero {
       max-width: 1200px;
       margin: 3rem auto 0;
       padding: 0 24px;
-      display: grid;
-      grid-template-columns: 1.15fr 1fr;
+      display: grid !important;
+      grid-template-columns: 1.15fr 1fr !important;
       gap: 3.5rem;
       align-items: center;
     }
@@ -99,51 +97,37 @@
       display: block;
     }
     .n-hero h1 {
-      font-size: 3.6rem;
+      font-size: 3.5rem;
       line-height: 1.1;
       font-weight: 800;
       margin-bottom: 1.3rem;
-      letter-spacing: -0.5px;
+      color: #ffffff !important;
     }
     .n-hero p {
       color: #cbd5e1;
-      font-size: 1.12rem;
+      font-size: 1.1rem;
       margin-bottom: 2rem;
       max-width: 500px;
     }
-    .n-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.85rem;
-      margin-bottom: 1.5rem;
-    }
-    .n-sub-link {
-      color: #a5b4fc;
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 600;
-    }
+    .n-pills { display: flex !important; flex-wrap: wrap; gap: 0.85rem; margin-bottom: 1.5rem; }
+    .n-sub-link { color: #a5b4fc; text-decoration: none; font-size: 0.95rem; font-weight: 600; }
     .n-sub-link:hover { text-decoration: underline; }
 
-    /* Tilted Preview Cards (Matches Right Side of 1st Image) */
+    /* Right Floating Cards */
     .n-showcase {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
       gap: 1rem;
-      transform: rotate(-4deg);
+      transform: rotate(-3deg);
     }
     .n-mock-card {
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.16);
-      backdrop-filter: blur(12px);
       border-radius: 16px;
       padding: 1.3rem;
       color: #ffffff;
     }
-    .n-mock-card.light {
-      background: #ffffff;
-      color: #0f172a;
-    }
+    .n-mock-card.light { background: #ffffff; color: #0f172a; }
     .n-mock-tag {
       font-size: 0.75rem;
       font-weight: 700;
@@ -155,49 +139,120 @@
       margin-bottom: 0.6rem;
     }
     .n-mock-card h4 { font-size: 1.05rem; margin-bottom: 0.4rem; }
-    .n-mock-card p { font-size: 0.82rem; opacity: 0.8; margin: 0; }
+    .n-mock-card p { font-size: 0.82rem; opacity: 0.85; margin: 0; }
 
-    /* White Section Below Hero (Matches "WHY RWAY?" Section) */
-    .n-white-sec {
-      max-width: 1200px;
-      margin: 5rem auto;
-      padding: 0 24px;
-    }
+    /* White Section & 3-Column Steps */
+    .n-white-sec { max-width: 1200px; margin: 4.5rem auto; padding: 0 24px; }
     .n-split {
-      display: grid;
-      grid-template-columns: 1fr 1.4fr;
+      display: grid !important;
+      grid-template-columns: 1fr 1.4fr !important;
       gap: 3rem;
       align-items: start;
-      margin-bottom: 4rem;
+      margin-bottom: 3.5rem;
     }
-    .n-split small {
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #6366f1;
-      font-weight: 700;
-      font-size: 0.8rem;
-    }
+    .n-split small { text-transform: uppercase; letter-spacing: 1.5px; color: #6366f1; font-weight: 700; font-size: 0.8rem; }
     .n-split h2 { font-size: 2.3rem; margin-top: 0.4rem; }
     .n-split p { color: #475569; font-size: 1.05rem; margin-bottom: 1.5rem; }
 
     .n-grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 1.5rem !important;
     }
     .n-feat-card {
       background: #f8fafc;
       border: 1px solid #e2e8f0;
       border-radius: 16px;
       padding: 1.8rem;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .n-feat-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
     }
     .n-feat-card h3 { margin: 0.6rem 0; font-size: 1.25rem; }
     .n-feat-card p { color: #475569; font-size: 0.95rem; }
+
+    /* Interactive How It Works Tabs (Side-by-Side) */
+    .iph-extra-wrap { max-width: 1200px; margin: 4rem auto 5rem; padding: 0 24px; }
+    .iph-sec-head { text-align: center; max-width: 650px; margin: 0 auto 2.2rem; }
+    .iph-sec-head small { text-transform: uppercase; letter-spacing: 1.5px; color: #4f46e5; font-weight: 700; font-size: 0.8rem; }
+    .iph-sec-head h2 { font-size: 2.2rem; margin: 0.4rem 0 0.5rem; }
+    .iph-sec-head p { color: #475569; font-size: 1rem; }
+
+    .iph-tabs-nav {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: center !important;
+      flex-wrap: wrap !important;
+      gap: 12px !important;
+      margin-bottom: 2rem !important;
+    }
+    .iph-tab-btn {
+      padding: 0.72rem 1.3rem !important;
+      border-radius: 999px !important;
+      border: 1.5px solid #cbd5e1 !important;
+      background: #ffffff !important;
+      color: #334155 !important;
+      font-weight: 600 !important;
+      font-size: 0.92rem !important;
+      cursor: pointer !important;
+      width: auto !important;
+      display: inline-flex !important;
+      align-items: center !important;
+    }
+    .iph-tab-btn.active {
+      background: #17153b !important;
+      color: #ffffff !important;
+      border-color: #17153b !important;
+    }
+
+    .iph-tab-panel {
+      display: none !important;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+      padding: 2.4rem;
+      grid-template-columns: 1.25fr 1fr !important;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .iph-tab-panel.active { display: grid !important; }
+    .iph-panel-left h3 { font-size: 1.7rem; margin-bottom: 0.7rem; }
+    .iph-panel-left p { color: #475569; margin-bottom: 1.2rem; }
+    .iph-step-list { list-style: none; margin-bottom: 1.6rem; }
+    .iph-step-list li {
+      margin-bottom: 0.6rem;
+      color: #1e293b;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .iph-step-list li span {
+      background: #e0e7ff;
+      color: #4338ca;
+      font-weight: 700;
+      min-width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+    }
+    .iph-panel-card {
+      background: linear-gradient(135deg, #17153b 0%, #3b2d8b 100%);
+      color: #ffffff;
+      border-radius: 18px;
+      padding: 2rem;
+    }
+    .iph-panel-card .badge {
+      background: rgba(255, 255, 255, 0.16);
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 0.9rem;
+    }
+    .iph-panel-card h4 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+    .iph-panel-card p { color: #cbd5e1; font-size: 0.92rem; }
 
     /* Footer */
     .n-footer {
@@ -209,16 +264,16 @@
     }
 
     @media (max-width: 850px) {
-      .n-hero, .n-split, .n-grid-3 { grid-template-columns: 1fr; }
-      .n-hero h1 { font-size: 2.5rem; }
-      .n-showcase { transform: none; margin-top: 1rem; }
+      .n-hero, .n-split, .n-grid-3, .iph-tab-panel.active { grid-template-columns: 1fr !important; }
+      .n-hero h1 { font-size: 2.4rem; }
+      .n-showcase { transform: none; }
       .n-links a:not(.n-btn) { display: none; }
     }
   </style>
 </head>
 <body class="ninora-theme">
 
-  <!-- Dark Hero Section (1st Image Style) -->
+  <!-- Dark Hero Section -->
   <div class="hero-wrapper">
     <nav class="n-nav">
       <a href="{% url 'home' %}" class="n-logo">
@@ -254,347 +309,3 @@
 
     <div class="n-hero">
       <div>
-        <span class="n-eyebrow">IDEAPARTNERHUB • STARTUP STUDIO</span>
-        <h1>You have the idea. Find the team to build it.</h1>
-        <p>Advancing student creativity with co-founder matching, hackathon teams, and direct investor access in one place.</p>
-
-        <div class="n-pills">
-          {% if user.is_authenticated %}
-            <a href="{% url 'post_idea' %}" class="n-btn n-btn-white">🚀 Post Your Idea</a>
-            <a href="{% url 'dashboard' %}" class="n-btn n-btn-glass">Open Workspace</a>
-          {% else %}
-            <a href="{% url 'student_signup' %}" class="n-btn n-btn-white">🚀 Post Your Idea</a>
-            <a href="{% url 'investor_signup' %}" class="n-btn n-btn-glass">Join as Investor</a>
-          {% endif %}
-        </div>
-
-        <a href="{% url 'find_team_register' %}" class="n-sub-link">🔍 Looking for a hackathon teammate? Register here →</a>
-      </div>
-
-      <!-- Right Side Floating UI Cards -->
-      <div class="n-showcase">
-        <div class="n-mock-card">
-          <span class="n-mock-tag">AI & EdTech</span>
-          <h4>StudyBuddy AI</h4>
-          <p>Smart notes & flashcard generator. Looking for React & Django devs.</p>
-        </div>
-        <div class="n-mock-card light">
-          <span class="n-mock-tag" style="background:#10b981;">Funded</span>
-          <h4>KisanMandi</h4>
-          <p>Direct crop price tracker for local farmers. 3/4 team seats filled.</p>
-        </div>
-        <div class="n-mock-card light">
-          <span class="n-mock-tag" style="background:#f59e0b;">Hackathon</span>
-          <h4>MedRemind</h4>
-          <p>Voice-assisted medicine alerts in Hindi. Needs Android developer.</p>
-        </div>
-        <div class="n-mock-card">
-          <span class="n-mock-tag" style="background:#ec4899;">Investor Ready</span>
-          <h4>Pitch & Connect</h4>
-          <p>Direct messaging between student founders and angel investors.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Clean White Section Below (Matches Bottom Half of 1st Image) -->
-  <section class="n-white-sec" id="why-hub">
-    <div class="n-split">
-      <div>
-        <small>WHY IDEAPARTNERHUB?</small>
-        <h2>Built for Student Innovators</h2>
-      </div>
-      <div>
-        <p>Together with student builders and early-stage investors, we turn classroom ideas and hackathon prototypes into real startups. Find teammates who match your missing skills.</p>
-        <a href="{% url 'signup' %}" class="n-btn" style="background:#0f172a; color:#fff;">Get Started Free →</a>
-      </div>
-    </div>
-
-    <div class="n-grid-3" id="live-ideas">
-      <div class="n-feat-card">
-  <!-- ================= NEW INTERACTIVE SECTION (HOW IT WORKS + FAQ) ================= -->
-  <style>
-    .iph-extra-wrap {
-      max-width: 1200px;
-      margin: 4rem auto;
-      padding: 0 24px;
-    }
-    .iph-sec-head {
-      text-align: center;
-      max-width: 650px;
-      margin: 0 auto 2.5rem;
-    }
-    .iph-sec-head small {
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #4f46e5;
-      font-weight: 700;
-      font-size: 0.8rem;
-    }
-    .iph-sec-head h2 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 2.3rem;
-      color: #0f172a;
-      margin: 0.4rem 0 0.6rem;
-    }
-    .iph-sec-head p {
-      color: #475569;
-      font-size: 1.02rem;
-    }
-
-    /* Interactive Tabs */
-    .iph-tabs-nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin-bottom: 2rem;
-    }
-    .iph-tab-btn {
-      padding: 0.75rem 1.35rem;
-      border-radius: 999px;
-      border: 1.5px solid #e2e8f0;
-      background: #ffffff;
-      color: #334155;
-      font-family: 'Instrument Sans', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .iph-tab-btn:hover {
-      border-color: #4f46e5;
-      color: #4f46e5;
-    }
-    .iph-tab-btn.active {
-      background: #17153b;
-      color: #ffffff;
-      border-color: #17153b;
-      box-shadow: 0 8px 20px rgba(23, 21, 59, 0.2);
-    }
-
-    /* Tab Content Box */
-    .iph-tab-panel {
-      display: none;
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 22px;
-      padding: 2.5rem;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 2.5rem;
-      align-items: center;
-      animation: fadeTab 0.3s ease;
-    }
-    .iph-tab-panel.active {
-      display: grid;
-    }
-    @keyframes fadeTab {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .iph-panel-left h3 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.75rem;
-      color: #0f172a;
-      margin-bottom: 0.8rem;
-    }
-    .iph-panel-left p {
-      color: #475569;
-      font-size: 1rem;
-      margin-bottom: 1.3rem;
-    }
-    .iph-step-list {
-      list-style: none;
-      margin-bottom: 1.8rem;
-    }
-    .iph-step-list li {
-      margin-bottom: 0.6rem;
-      color: #1e293b;
-      font-size: 0.95rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .iph-step-list li span {
-      background: #e0e7ff;
-      color: #4338ca;
-      font-weight: 700;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-    }
-    .iph-panel-card {
-      background: linear-gradient(135deg, #17153b 0%, #3b2d8b 100%);
-      color: #ffffff;
-      border-radius: 18px;
-      padding: 2rem;
-      box-shadow: 0 15px 35px rgba(23, 21, 59, 0.2);
-    }
-    .iph-panel-card .badge {
-      background: rgba(255, 255, 255, 0.16);
-      padding: 0.3rem 0.75rem;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      display: inline-block;
-      margin-bottom: 1rem;
-    }
-    .iph-panel-card h4 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.35rem;
-      margin-bottom: 0.6rem;
-    }
-    .iph-panel-card p {
-      color: #cbd5e1;
-      font-size: 0.92rem;
-      margin: 0;
-    }
-
-    /* FAQ Accordion */
-    .iph-faq-box {
-      max-width: 820px;
-      margin: 4.5rem auto 2rem;
-    }
-    .iph-faq-item {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      margin-bottom: 0.9rem;
-      overflow: hidden;
-    }
-    .iph-faq-q {
-      width: 100%;
-      text-align: left;
-      padding: 1.2rem 1.5rem;
-      background: none;
-      border: none;
-      font-family: 'Instrument Sans', sans-serif;
-      font-size: 1.02rem;
-      font-weight: 600;
-      color: #0f172a;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .iph-faq-a {
-      display: none;
-      padding: 0 1.5rem 1.2rem;
-      color: #475569;
-      font-size: 0.95rem;
-      border-top: 1px solid #f1f5f9;
-      padding-top: 0.9rem;
-    }
-    .iph-faq-item.open .iph-faq-a {
-      display: block;
-    }
-
-    @media (max-width: 800px) {
-      .iph-tab-panel { grid-template-columns: 1fr; padding: 1.6rem; }
-      .iph-sec-head h2 { font-size: 1.85rem; }
-    }
-  </style>
-
-  <section class="iph-extra-wrap" id="how-it-works">
-    <div class="iph-sec-head">
-      <small>STEP-BY-STEP GUIDE</small>
-      <h2>How IdeaPartnerHub Works</h2>
-      <p>Click on any goal below to see how we help you build your team and grow your startup.</p>
-    </div>
-
-    <!-- Clickable Tabs -->
-    <div class="iph-tabs-nav">
-      <button type="button" class="iph-tab-btn active" onclick="openIphTab(event, 'tab-cofounder')">🤝 Find a Co-Founder</button>
-      <button type="button" class="iph-tab-btn" onclick="openIphTab(event, 'tab-investor')">💰 Connect with Investors</button>
-      <button type="button" class="iph-tab-btn" onclick="openIphTab(event, 'tab-teammate')">🚀 Find Hackathon Teammates</button>
-      <button type="button" class="iph-tab-btn" onclick="openIphTab(event, 'tab-launch')">📈 Build & Launch MVP</button>
-    </div>
-
-    <!-- Tab 1: Co-Founder -->
-    <div class="iph-tab-panel active" id="tab-cofounder">
-      <div class="iph-panel-left">
-        <h3>Find the Right Co-Founder for Your Idea</h3>
-        <p>Have a great tech or business idea but lack coding or design skills? Post your requirement and match with passionate student builders.</p>
-        <ul class="iph-step-list">
-          <li><span>1</span> Create your free Student Founder profile in 30 seconds.</li>
-          <li><span>2</span> Post your idea and tag the skills you need (Developer, Designer, Marketing).</li>
-          <li><span>3</span> Review interested students and build your core founding team.</li>
-        </ul>
-        <a href="{% url 'post_idea' %}" class="n-btn" style="background:#17153b; color:#fff;">Post Your Idea Now →</a>
-      </div>
-      <div class="iph-panel-card">
-        <span class="badge">✨ Co-Founder Match Example</span>
-        <h4>"Looking for a Frontend & UI/UX Co-Founder"</h4>
-        <p>A student from IIT Indore posted an EdTech idea and found 2 developers within 48 hours to build their first prototype.</p>
-      </div>
-    </div>
-
-    <!-- Tab 2: Investors -->
-    <div class="iph-tab-panel" id="tab-investor">
-      <div class="iph-panel-left">
-        <h3>Pitch Directly to Angel Investors</h3>
-        <p>No cold emails needed. Verified investors browse live student ideas on our dashboard and click "Connect" when they like your vision.</p>
-        <ul class="iph-step-list">
-          <li><span>1</span> Keep your idea stage updated (Idea, Prototype, or MVP).</li>
-          <li><span>2</span> Investors filter projects by Tech, Health, EdTech, or E-commerce.</li>
-          <li><span>3</span> When an investor expresses interest, our team connects you directly.</li>
-        </ul>
-        <a href="{% url 'dashboard' %}" class="n-btn" style="background:#17153b; color:#fff;">Explore Investor Dashboard →</a>
-      </div>
-      <div class="iph-panel-card">
-        <span class="badge">💰 Direct Investor Interest</span>
-        <h4>"1-Click Connection Request"</h4>
-        <p>Investors can review your problem statement, required support, and college background before scheduling a pitch call.</p>
-      </div>
-    </div>
-
-    <!-- Tab 3: Teammates -->
-    <div class="iph-tab-panel" id="tab-teammate">
-      <div class="iph-panel-left">
-        <h3>Build Your Winning Hackathon Squad</h3>
-        <p>Participating in Smart India Hackathon (SIH), college tech fests, or coding competitions? Find reliable teammates fast.</p>
-        <ul class="iph-step-list">
-          <li><span>1</span> Enter your Hackathon or Event name.</li>
-          <li><span>2</span> List your primary skill and the exact role you are looking for.</li>
-          <li><span>3</span> Get matched with students ready to collaborate and win.</li>
-        </ul>
-        <a href="{% url 'find_team_register' %}" class="n-btn" style="background:#17153b; color:#fff;">Find a Teammate →</a>
-      </div>
-      <div class="iph-panel-card">
-        <span class="badge">🏆 Hackathon Ready</span>
-        <h4>"Complete Your 4-Member Team"</h4>
-        <p>Whether you need a backend Django developer, a Figma designer, or a pitch presenter, find them before the deadline.</p>
-      </div>
-    </div>
-
-    <!-- Tab 4: Build & Launch -->
-    <div class="iph-tab-panel" id="tab-launch">
-      <div class="iph-panel-left">
-        <h3>Turn Your Prototype into a Real Startup</h3>
-        <p>IdeaPartnerHub supports you from your very first rough sketch to acquiring your first 100 users.</p>
-        <ul class="iph-step-list">
-          <li><span>1</span> Validate your idea with feedback from peers and mentors.</li>
-          <li><span>2</span> Build your Minimum Viable Product (MVP) with your new team.</li>
-          <li><span>3</span> Raise early seed support to scale your startup across campuses.</li>
-        </ul>
-        <a href="{% url 'signup' %}" class="n-btn" style="background:#17153b; color:#fff;">Create Free Account →</a>
-      </div>
-      <div class="iph-panel-card">
-        <span class="badge">🚀 Campus to Market</span>
-        <h4>"100% Free for Students"</h4>
-        <p>Zero platform fees for student innovators. Focus on building your product while we help you find people and funding.</p>
-      </div>
-    </div>
-
-    <!-- Frequently Asked Questions -->
-    <div class="iph-faq-box">
-      <div class="iph-sec-head" style="margin-bottom:1.8rem;">
-        <small>GOT QUESTIONS?</small>
-        <h2>Frequently Asked Questions</h2>
-      </div>
-
-      <div class="iph-faq-item">
