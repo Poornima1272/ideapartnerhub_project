@@ -30,7 +30,7 @@ def student_signup(request):
         college = request.POST.get("college", "").strip()
 
         if not name or not phone or not college:
-            messages.error(request, "Kripya naam, phone aur college bharo.")
+            messages.error(request, "Please enter name , phone and college.")
             return render(request, "Student signup.html")
 
         student = Student.objects.create(
@@ -41,7 +41,7 @@ def student_signup(request):
             skill=request.POST.get("skill", "").strip(),
         )
         request.session["student_id"] = student.id
-        messages.success(request, f"Welcome {student.name}! Ab apni idea post karo.")
+        messages.success(request, f"Welcome {student.name}! Now post your idea.")
         return redirect("post_idea")
 
     return render(request, "Student signup.html")
@@ -54,7 +54,7 @@ def investor_signup(request):
         occupation = request.POST.get("occupation", "").strip()
 
         if not name or not phone or not occupation:
-            messages.error(request, "Kripya naam, phone aur occupation bharo.")
+            messages.error(request, "Please enter name,phone and occupation.")
             return render(request, "Investor signup.html")
 
         Investor.objects.create(
@@ -64,7 +64,7 @@ def investor_signup(request):
             occupation=occupation,
             interest_area=request.POST.get("interest_area", "").strip(),
         )
-        messages.success(request, f"Welcome {name}! Ab ideas browse karo.")
+        messages.success(request, f"Welcome {name}! Now browse ideas.")
         return redirect("dashboard")
 
     return render(request, "Investor signup.html")
@@ -83,7 +83,7 @@ def post_idea(request):
         contact = request.POST.get("contact", "").strip()
 
         if not title or not description or not name or not contact:
-            messages.error(request, "Kripya saare zaroori fields bharo.")
+            messages.error(request, "Please fill in all the required fields.")
             return render(request, "prtapp/post-idea.html", {"student": student})
 
         help_tags = request.POST.getlist("help_needed")
@@ -99,7 +99,7 @@ def post_idea(request):
             college=request.POST.get("college", "").strip(),
             contact=contact,
         )
-        messages.success(request, "Tumhari idea successfully post ho gayi!")
+        messages.success(request, "Your idea has been posted succesfully!")
         return redirect("post_idea")
 
     return render(request, "Post-idea.html", {"student": student})
@@ -137,14 +137,14 @@ def express_interest(request, idea_id):
         investor = Investor.objects.first() 
         
         if not investor:
-            messages.error(request, "Koi investor account nahi mila. Kripya pehle sign up karein.")
+            messages.error(request, "NO investor account found.please sign up first.")
             return redirect("dashboard")
             
         # 3. Check karein ki is investor ne pehle se request toh nahi bheji hai
         already_requested = ConnectionRequest.objects.filter(investor=investor, idea=idea).exists()
         
         if already_requested:
-            messages.warning(request, "Aapne is idea ke liye pehle hi interest express kar diya hai.")
+            messages.warning(request, "You have already expressed interest for this idea.")
         else:
             # 4. Naya request database mein save karein jiska status 'pending' hoga
             ConnectionRequest.objects.create(
@@ -153,7 +153,7 @@ def express_interest(request, idea_id):
                 message_by_investor="I am interested in this idea. Please arrange a meeting.",
                 status="pending"
             )
-            messages.success(request, f"Thank you! Aapka interest hamare paas save ho gaya hai. Hum jald hi aapse aur student se connect karenge.")
+            messages.success(request, f"Thank you! Your interest has been saved with us. We will connect you and student soon")
             
         return redirect("dashboard")
         
@@ -169,7 +169,7 @@ def find_team_register(request):
 
     # Agar user login nahi hai ya session expired hai, toh use pehle signup par bhejein (Aaditya par fallback nahi karenge)
     if not student:
-        messages.error(request, "Teammate dhoondhne ke liye kripya pehle Student Signup/Login karein.")
+        messages.error(request, "To find a teammate, please fris do Student Signup/Login.")
         return redirect("student_signup")
 
     if request.method == "POST":
@@ -179,7 +179,7 @@ def find_team_register(request):
         project_description = request.POST.get("project_description", "").strip()
 
         if not hackathon_name or not my_role or not looking_for:
-            messages.error(request, "Kripya Hackathon ka naam, apni skill, aur teammate ki requirement zaroor bharein.")
+            messages.error(request, "Please make sure to fill in the hackthon name ,you skill, and the teammate requrement .")
             return render(request, "Find-team.html", {"student": student})
 
         # Database mein exact logged-in student ke sath data save hoga
@@ -191,7 +191,7 @@ def find_team_register(request):
             project_description=project_description,
             status="looking"
         )
-        messages.success(request, "Aapki requirement successfully save ho gayi hai!")
+        messages.success(request, "Your requirement has been saved succesfully !")
         return redirect("home")
 
     return render(request, "Find-team.html", {"student": student})

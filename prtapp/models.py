@@ -107,9 +107,9 @@ class ConnectionRequest(models.Model):
 
 class TeamFinder(models.Model):
     TEAM_STATUS = [
-        ("looking", "Looking for Teammate (Teammate dhoondh raha hai)"),
-        ("matched", "Matched / Team Formed (Team ban gayi hai)"),
-        ("closed", "Closed (Band ho gaya)"),
+        ("looking", "Looking for Teammate (Searching for a Teammate)"),
+        ("matched", "Matched / Team Formed (Team has been formed)"),
+        ("closed", "Closed (Closed)"),
     ]
     student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name="team_profiles")
     hackathon_name = models.CharField(max_length=200)
