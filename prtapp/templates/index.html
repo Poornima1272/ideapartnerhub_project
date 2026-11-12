@@ -4,183 +4,311 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IdeaPartnerHub — Find the team that builds your idea</title>
+  <title>IdeaPartnerHub — Startup Landing Page</title>
   <link rel="preconnect" href="https://googleapis.com">
   <link rel="preconnect" href="https://gstatic.com" crossorigin>
   <link href="https://googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'Style.css' %}">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body.ninora-theme {
+      font-family: 'Instrument Sans', sans-serif;
+      background-color: #ffffff;
+      color: #0f172a;
+      line-height: 1.6;
+    }
+    h1, h2, h3 { font-family: 'Bricolage Grotesque', sans-serif; }
+
+    /* Dark Gradient Hero Wrapper (Matches 1st Image) */
+    .hero-wrapper {
+      background: radial-gradient(circle at 80% 20%, #3b2d8b 0%, #17153b 45%, #0b0a1f 100%);
+      color: #ffffff;
+      padding-bottom: 5rem;
+      overflow: hidden;
+    }
+
+    /* Navbar */
+    .n-nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.4rem 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .n-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+    .n-logo img { height: 36px; border-radius: 6px; }
+    .n-links { display: flex; align-items: center; gap: 1.8rem; }
+    .n-links a {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .n-links a:hover { color: #ffffff; }
+
+    .n-btn {
+      padding: 0.65rem 1.3rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .n-btn:hover { transform: translateY(-2px); }
+    .n-btn-white { background: #ffffff; color: #0f172a !important; }
+    .n-btn-glass {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+    }
+    .n-btn-danger { background: #ef4444; color: #ffffff !important; }
+
+    /* Hero Content */
+    .n-hero {
+      max-width: 1200px;
+      margin: 3rem auto 0;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .n-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #a5b4fc;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .n-hero h1 {
+      font-size: 3.6rem;
+      line-height: 1.1;
+      font-weight: 800;
+      margin-bottom: 1.3rem;
+      letter-spacing: -0.5px;
+    }
+    .n-hero p {
+      color: #cbd5e1;
+      font-size: 1.12rem;
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+    .n-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+    .n-sub-link {
+      color: #a5b4fc;
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .n-sub-link:hover { text-decoration: underline; }
+
+    /* Tilted Preview Cards (Matches Right Side of 1st Image) */
+    .n-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      transform: rotate(-4deg);
+    }
+    .n-mock-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(12px);
+      border-radius: 16px;
+      padding: 1.3rem;
+      color: #ffffff;
+    }
+    .n-mock-card.light {
+      background: #ffffff;
+      color: #0f172a;
+    }
+    .n-mock-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      background: #4f46e5;
+      color: #ffffff;
+      display: inline-block;
+      margin-bottom: 0.6rem;
+    }
+    .n-mock-card h4 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .n-mock-card p { font-size: 0.82rem; opacity: 0.8; margin: 0; }
+
+    /* White Section Below Hero (Matches "WHY RWAY?" Section) */
+    .n-white-sec {
+      max-width: 1200px;
+      margin: 5rem auto;
+      padding: 0 24px;
+    }
+    .n-split {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 3rem;
+      align-items: start;
+      margin-bottom: 4rem;
+    }
+    .n-split small {
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #6366f1;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+    .n-split h2 { font-size: 2.3rem; margin-top: 0.4rem; }
+    .n-split p { color: #475569; font-size: 1.05rem; margin-bottom: 1.5rem; }
+
+    .n-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .n-feat-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 1.8rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .n-feat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+    }
+    .n-feat-card h3 { margin: 0.6rem 0; font-size: 1.25rem; }
+    .n-feat-card p { color: #475569; font-size: 0.95rem; }
+
+    /* Footer */
+    .n-footer {
+      background: #0b0a1f;
+      color: #94a3b8;
+      padding: 2.5rem 24px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 850px) {
+      .n-hero, .n-split, .n-grid-3 { grid-template-columns: 1fr; }
+      .n-hero h1 { font-size: 2.5rem; }
+      .n-showcase { transform: none; margin-top: 1rem; }
+      .n-links a:not(.n-btn) { display: none; }
+    }
+  </style>
 </head>
-<body class="iph-home">
- 
-<header class="nav" id="nav">
-  <div class="wrap">
-    <a href="/" class="logo">
-      <img src="{% static 'images/logo.png' %}" alt="IdeaPartnerHub logo" class="site-logo">
-    </a>
-    <button class="menu" id="menu" aria-label="Open menu" aria-expanded="false">☰</button>
- 
-    <div class="panel">
-      <nav class="links" aria-label="Main">
-        <a href="#how-it-works">How it works</a>
-        <a href="#investors">For investors</a>
-        <a href="#ideas">For students</a>
-      </nav>
- 
-      <div class="auth">
+<body class="ninora-theme">
+
+  <!-- Dark Hero Section (1st Image Style) -->
+  <div class="hero-wrapper">
+    <nav class="n-nav">
+      <a href="{% url 'home' %}" class="n-logo">
+        <img src="{% static 'images/logo.png' %}" alt="Logo">
+        <span>IdeaPartnerHub</span>
+      </a>
+
+      <div class="n-links">
+        <a href="#why-hub">How it works</a>
+        <a href="#live-ideas">Explore Ideas</a>
+        <a href="{% url 'find_team_register' %}">Find Teammates</a>
+
         {% if user.is_authenticated %}
-          <span class="hi">Hi, <strong>{{ user.email }}</strong></span>
-          <form method="post" action="{% url 'logout' %}" style="margin:0">
+          <a href="{% url 'dashboard' %}" class="n-btn n-btn-white">Dashboard</a>
+          <form method="post" action="{% url 'logout' %}" style="margin:0;">
             {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Log out</button>
+            <button type="submit" class="n-btn n-btn-danger">Log out</button>
           </form>
         {% else %}
-          <a href="{% url 'login' %}" class="btn">Log in</a>
-          <a href="{% url 'signup' %}" class="btn btn-primary">Sign up</a>
+          <a href="{% url 'login' %}" class="n-btn n-btn-glass">Log in</a>
+          <a href="{% url 'signup' %}" class="n-btn n-btn-white">Sign up</a>
         {% endif %}
       </div>
-    </div>
-  </div>
-</header>
- 
-{% if messages %}
-  <div class="wrap messages">
-    {% for message in messages %}
-      <p class="{{ message.tags }}">{{ message }}</p>
-    {% endfor %}
-  </div>
-{% endif %}
- 
-<main>
-  <!-- HERO -->
-  <section class="hero">
-    <div class="wrap hero-grid">
+    </nav>
+
+    {% if messages %}
+      <div style="max-width:1200px; margin:0 auto; padding:0 24px;">
+        {% for message in messages %}
+          <p style="background:rgba(255,255,255,0.15); padding:10px 16px; border-radius:8px; margin-bottom:10px;">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="n-hero">
       <div>
-        <span class="badge">Made for hackathon founders</span>
+        <span class="n-eyebrow">IDEAPARTNERHUB • STARTUP STUDIO</span>
         <h1>You have the idea. Find the team to build it.</h1>
-        <p class="lead">Post your startup idea, match with students who have the skills you need, and pitch to investors, all in one place.</p>
- 
-        <div class="cta">
+        <p>Advancing student creativity with co-founder matching, hackathon teams, and direct investor access in one place.</p>
+
+        <div class="n-pills">
           {% if user.is_authenticated %}
-            {% if user.student_profile %}
-              <a href="{% url 'post_idea' %}" class="btn btn-primary">Go to idea workspace</a>
-            {% elif user.investor_profile %}
-              <a href="{% url 'dashboard' %}" class="btn btn-primary">Go to dashboard</a>
-            {% else %}
-              <a href="{% url 'dashboard' %}" class="btn btn-primary">Go to dashboard</a>
-            {% endif %}
+            <a href="{% url 'post_idea' %}" class="n-btn n-btn-white">🚀 Post Your Idea</a>
+            <a href="{% url 'dashboard' %}" class="n-btn n-btn-glass">Open Workspace</a>
           {% else %}
-            <a href="{% url 'student_signup' %}" class="btn btn-primary">Post your idea</a>
-            <a href="{% url 'investor_signup' %}" class="btn">Join as an investor</a>
+            <a href="{% url 'student_signup' %}" class="n-btn n-btn-white">🚀 Post Your Idea</a>
+            <a href="{% url 'investor_signup' %}" class="n-btn n-btn-glass">Join as Investor</a>
           {% endif %}
         </div>
-        <a href="{% url 'find_team_register' %}" class="find">🔍 Find a teammate for a hackathon or project</a>
+
+        <a href="{% url 'find_team_register' %}" class="n-sub-link">🔍 Looking for a hackathon teammate? Register here →</a>
       </div>
- 
-      <article class="idea" aria-label="Example idea">
-        <div class="idea-top">
-          <span class="tag">EdTech</span>
-          <span class="live">Looking for teammates</span>
+
+      <!-- Right Side Floating UI Cards -->
+      <div class="n-showcase">
+        <div class="n-mock-card">
+          <span class="n-mock-tag">AI & EdTech</span>
+          <h4>StudyBuddy AI</h4>
+          <p>Smart notes & flashcard generator. Looking for React & Django devs.</p>
         </div>
-        <h3>StudyBuddy: notes sharing for college</h3>
-        <p>An app where students swap handwritten notes and get answers from seniors.</p>
-        <div class="chips">
-          <span class="chip">React</span><span class="chip">Django</span><span class="chip">UI/UX</span>
+        <div class="n-mock-card light">
+          <span class="n-mock-tag" style="background:#10b981;">Funded</span>
+          <h4>KisanMandi</h4>
+          <p>Direct crop price tracker for local farmers. 3/4 team seats filled.</p>
         </div>
-        <div class="team" aria-label="Team seats">
-          <span class="seat s1">A</span>
-          <span class="seat s2">R</span>
-          <span class="seat open">+</span>
-          <span class="seat open">+</span>
-          <small>2 of 4 seats filled</small>
+        <div class="n-mock-card light">
+          <span class="n-mock-tag" style="background:#f59e0b;">Hackathon</span>
+          <h4>MedRemind</h4>
+          <p>Voice-assisted medicine alerts in Hindi. Needs Android developer.</p>
         </div>
-      </article>
-    </div>
-  </section>
- 
-  <!-- STATS -->
-  <div class="stats">
-    <div class="wrap stats-row">
-      <div class="stat"><b>5+</b><span>Students joined</span></div>
-      <div class="stat"><b>5+</b><span>Investors ready</span></div>
-      <div class="stat"><b>5+</b><span>Teams formed</span></div>
+        <div class="n-mock-card">
+          <span class="n-mock-tag" style="background:#ec4899;">Investor Ready</span>
+          <h4>Pitch & Connect</h4>
+          <p>Direct messaging between student founders and angel investors.</p>
+        </div>
+      </div>
     </div>
   </div>
- 
-  <!-- HOW IT WORKS -->
-  <section class="how" id="how-it-works">
-    <div class="wrap">
-      <h2>How it works</h2>
-      <p class="sub">Three things the hub does for you, from the first idea to the first funding conversation.</p>
-      <div class="rows">
-        <div class="row">
-          <div class="ic">👥</div>
-          <h3>Co-founder matching</h3>
-          <p>List the skills your idea needs. We show you students who have them, and you choose who to invite.</p>
-        </div>
-        <div class="row" id="investors">
-          <div class="ic">💰</div>
-          <h3>Investor connect</h3>
-          <p>Investors browse live ideas and message founders directly. Pitch once, reach many.</p>
-        </div>
-        <div class="row">
-          <div class="ic">📈</div>
-          <h3>Growth guidance</h3>
-          <p>Get 1-to-1 mentorship to plan your MVP, your pitch, and your next steps.</p>
-        </div>
+
+  <!-- Clean White Section Below (Matches Bottom Half of 1st Image) -->
+  <section class="n-white-sec" id="why-hub">
+    <div class="n-split">
+      <div>
+        <small>WHY IDEAPARTNERHUB?</small>
+        <h2>Built for Student Innovators</h2>
+      </div>
+      <div>
+        <p>Together with student builders and early-stage investors, we turn classroom ideas and hackathon prototypes into real startups. Find teammates who match your missing skills.</p>
+        <a href="{% url 'signup' %}" class="n-btn" style="background:#0f172a; color:#fff;">Get Started Free →</a>
       </div>
     </div>
-  </section>
- 
-  <!-- FEATURED IDEAS -->
-  <section id="ideas">
-    <div class="wrap">
-      <h2>Fresh ideas looking for people</h2>
-      <p class="sub">Browse what other students are building and ask to join a team.</p>
-      <div class="grid">
-        <article class="card">
-          <span class="tag">HealthTech</span>
-          <h3>MedRemind</h3>
-          <p>Medicine reminders for elders with voice alerts in Hindi.</p>
-          <div class="meta"><span class="need">Needs: Android dev</span></div>
-        </article>
-        <article class="card">
-          <span class="tag">AgriTech</span>
-          <h3>KisanMandi</h3>
-          <p>Farmers list crops and compare mandi prices on their phone.</p>
-          <div class="meta"><span class="need">Needs: Backend, Designer</span></div>
-        </article>
-        <article class="card">
-          <span class="tag">AI</span>
-          <h3>ResumeLens</h3>
-          <p>Upload a resume and get skill-gap feedback for campus placements.</p>
-          <div class="meta"><span class="need">Needs: ML student</span></div>
-        </article>
-      </div>
-    </div>
-  </section>
- 
-  <!-- FINAL CTA -->
-  <section>
-    <div class="wrap">
-      <div class="final">
-        <h2>Your idea is ready. Post it today.</h2>
-        {% if user.is_authenticated %}
-          <a href="{% url 'dashboard' %}" class="btn">Open dashboard</a>
-        {% else %}
-          <a href="{% url 'signup' %}" class="btn">Create free account</a>
-        {% endif %}
-      </div>
-    </div>
-  </section>
-</main>
- 
-<footer>
-  <div class="wrap foot">
-    <span>© 2026 IdeaPartnerHub. Built for student founders.</span>
-    <nav aria-label="Footer"><a href="#">About</a><a href="#">Contact</a><a href="#">Privacy</a></nav>
-  </div>
-</footer>
- 
-<script src="{% static 'Main.js' %}"></script>
-</body>
-</html>
+
+    <div class="n-grid-3" id="live-ideas">
+      <div class="n-feat-card">

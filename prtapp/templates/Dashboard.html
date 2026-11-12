@@ -4,370 +4,358 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Investor Dashboard — IdeaPartnerHub</title>
+  <title>All Projects — IdeaPartnerHub</title>
   <link rel="preconnect" href="https://googleapis.com">
   <link rel="preconnect" href="https://gstatic.com" crossorigin>
-  <link href="https://googleapis.com" rel="stylesheet">
+  <link href="https://googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'Style.css' %}">
   <style>
-    body.dash-body {
-      font-family: 'Instrument Sans', 'Segoe UI', sans-serif;
-      background-color: #f8fafc;
-      color: #0f172a;
-      margin: 0;
-      line-height: 1.6;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body.proj-dash {
+      font-family: 'Instrument Sans', sans-serif;
+      background-color: #f4f5f7;
+      color: #1e293b;
+      display: flex;
+      min-height: 100vh;
     }
 
-    .dash-wrap {
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-
-    /* Modern Navbar */
-    .dash-nav {
-      background: #ffffff;
-      border-bottom: 1px solid #e2e8f0;
-      position: sticky;
+    /* Left Dark Sidebar (Matches 2nd Image) */
+    .p-sidebar {
+      width: 68px;
+      background-color: #2c2f36;
+      color: #9ca3af;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 0;
+      position: fixed;
       top: 0;
-      z-index: 50;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
     }
-    .dash-nav .dash-wrap {
+    .p-side-logo img {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    .p-side-icons {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      width: 100%;
+      align-items: center;
+    }
+    .p-side-icons a {
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 1.25rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+    .p-side-icons a:hover, .p-side-icons a.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+    }
+    .p-side-bottom {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .p-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #4f46e5;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Main Content Area */
+    .p-main {
+      margin-left: 68px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Sub-Navigation Bar */
+    .p-topbar {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 0 2rem;
+      height: 58px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 70px;
     }
-    .dash-logo {
+    .p-tabs {
       display: flex;
+      gap: 1.8rem;
+      height: 100%;
       align-items: center;
-      gap: 10px;
+    }
+    .p-tabs a {
       text-decoration: none;
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: #0c447c;
-    }
-    .dash-logo img {
-      height: 36px;
-    }
-    .dash-nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-    }
-    .dash-nav-links a {
-      text-decoration: none;
-      color: #475569;
+      color: #64748b;
+      font-size: 0.92rem;
       font-weight: 500;
-      font-size: 0.95rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid transparent;
     }
-    .dash-nav-links a:hover {
-      color: #0c447c;
-    }
-
-    /* Buttons */
-    .d-btn {
-      padding: 0.55rem 1.1rem;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      text-decoration: none;
-      cursor: pointer;
-      border: 1px solid #cbd5e1;
-      background: #ffffff;
+    .p-tabs a.active {
       color: #0f172a;
-      transition: all 0.2s;
+      font-weight: 600;
+      border-bottom-color: #22c55e;
     }
-    .d-btn-primary {
-      background: #0c447c;
-      color: #ffffff !important;
-      border-color: #0c447c;
-    }
-    .d-btn-primary:hover {
-      background: #082f57;
-    }
-    .d-btn-danger {
-      background: #dc2626;
-      color: #ffffff !important;
-      border-color: #dc2626;
-    }
-
-    /* Messages */
-    .messages {
-      margin-top: 1.2rem;
-    }
-    .messages p {
-      padding: 0.85rem 1.1rem;
-      border-radius: 10px;
-      background: #dbeafe;
-      color: #0c447c;
-      font-weight: 500;
-      font-size: 0.95rem;
-    }
-    .messages p.error {
+    .p-logout-btn {
       background: #fee2e2;
       color: #dc2626;
+      border: none;
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
     }
 
-    /* Header Banner */
-    .dashbord-header {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 1.75rem 2rem;
-      margin: 2rem 0 1.5rem;
+    /* Workspace Container */
+    .p-content {
+      padding: 2rem 2.5rem;
+      max-width: 1320px;
+      width: 100%;
+    }
+
+    /* Header Row ("All projects" + Green "+ New project" Button) */
+    .p-header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
-    }
-    .dashbord-header h2 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.75rem;
-      margin: 0;
-      color: #0f172a;
-    }
-    .dashbord-header p {
-      color: #475569;
-      font-size: 0.95rem;
-      margin: 0.3rem 0 0;
-    }
-
-    /* Filter Bar */
-    .filter-bar {
-      display: flex;
-      gap: 12px;
       margin-bottom: 1.8rem;
-      flex-wrap: wrap;
-      background: #ffffff;
-      padding: 1rem;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
     }
-    .filter-bar select,
-    .filter-bar input {
-      padding: 0.65rem 0.95rem;
-      border-radius: 8px;
-      border: 1.5px solid #cbd5e1;
-      font-size: 0.92rem;
-      font-family: inherit;
-      background: #f8fafc;
-      color: #0f172a;
-      outline: none;
-      transition: border-color 0.2s;
+    .p-title-group {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
     }
-    .filter-bar select:focus,
-    .filter-bar input:focus {
-      border-color: #0c447c;
-      background: #ffffff;
+    .p-title-group h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.65rem;
+      font-weight: 600;
+      color: #1e293b;
     }
-    .filter-bar input {
-      flex: 1;
-      min-width: 220px;
+    .btn-green-new {
+      background-color: #28a745;
+      color: #ffffff !important;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(40, 167, 69, 0.25);
+      transition: background 0.2s;
     }
+    .btn-green-new:hover { background-color: #218838; }
 
-    /* Idea Cards Grid */
+    /* Filter & Search Controls */
+    .p-filters {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .p-filters select, .p-filters input {
+      padding: 0.48rem 0.85rem;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      background: #ffffff;
+      font-size: 0.88rem;
+      color: #374151;
+      outline: none;
+    }
+    .p-filters input { min-width: 210px; }
+
+    /* 4-Column Project Grid (Matches 2nd Image Cards) */
     .idea-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.4rem;
     }
     .idea-card {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
+      border-radius: 8px;
       padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      border: 1px solid #edf0f3;
       display: flex;
       flex-direction: column;
-      transition: box-shadow 0.2s ease, transform 0.2s ease;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .idea-card:hover {
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
       transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.07);
     }
-    .idea-card .top-row {
+
+    /* Top Row: Circular Colored Badge + Stage Timestamp */
+    .card-top-badge {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 0.75rem;
+      margin-bottom: 1.1rem;
+    }
+    .circle-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+    /* Alternating Circle Colors like 2nd Image */
+    .idea-card:nth-child(4n+1) .circle-icon { background: #111827; }
+    .idea-card:nth-child(4n+2) .circle-icon { background: #f59e0b; }
+    .idea-card:nth-child(4n+3) .circle-icon { background: #f43f5e; }
+    .idea-card:nth-child(4n+4) .circle-icon { background: #1d4ed8; }
+
+    .stage-time {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #9ca3af;
+      font-weight: 600;
+    }
+
+    /* Founder / Category Subtitle + Bold Project Title */
+    .founder-sub {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin-bottom: 0.2rem;
     }
     .idea-card h3 {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.15rem;
-      margin: 0;
-      line-height: 1.35;
-      color: #0f172a;
-    }
-    .idea-card .stage-badge {
-      font-size: 0.75rem;
-      padding: 0.25rem 0.65rem;
-      border-radius: 999px;
-      background: #dbeafe;
-      color: #0c447c;
-      white-space: nowrap;
-      font-weight: 600;
-    }
-    .idea-card .category-badge {
-      font-size: 0.78rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 6px;
-      background: #f1f5f9;
-      color: #475569;
-      font-weight: 600;
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 0.5rem;
     }
     .idea-card p.desc {
-      font-size: 0.92rem;
-      color: #475569;
-      margin: 0 0 1rem;
-      line-height: 1.55;
+      font-size: 0.85rem;
+      color: #6b7280;
+      line-height: 1.5;
+      margin-bottom: 1rem;
       flex-grow: 1;
     }
-    .idea-card .meta {
-      font-size: 0.85rem;
-      color: #64748b;
-      margin-bottom: 0.9rem;
-    }
-    .idea-card .help-tags {
+
+    /* Skill Chips */
+    .help-tags {
       display: flex;
-      gap: 6px;
       flex-wrap: wrap;
-      margin-bottom: 1.1rem;
+      gap: 5px;
+      margin-bottom: 1rem;
     }
-    .idea-card .help-tag {
-      font-size: 0.78rem;
-      padding: 0.25rem 0.65rem;
-      border-radius: 6px;
-      background: #fef3c7;
-      color: #b45309;
+    .help-tag {
+      font-size: 0.72rem;
+      background: #f1f5f9;
+      color: #475569;
+      padding: 3px 8px;
+      border-radius: 4px;
       font-weight: 600;
     }
-    .idea-card .contact-row {
-      font-size: 0.85rem;
-      color: #475569;
-      border-top: 1px solid #f1f5f9;
-      padding-top: 0.9rem;
-      margin-top: auto;
+
+    /* Card Bottom Action */
+    .card-action {
+      border-top: 1px solid #f3f4f6;
+      padding-top: 0.85rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 0.5rem;
     }
-    .idea-card .contact-row strong {
-      color: #0f172a;
-    }
-    .empty-state {
-      text-align: center;
-      padding: 4rem 1.5rem;
-      background: #ffffff;
-      border: 1px dashed #cbd5e1;
-      border-radius: 16px;
+    .cat-label {
+      font-size: 0.78rem;
       color: #64748b;
-      grid-column: 1 / -1;
+      font-weight: 600;
     }
+    .btn-interest {
+      background: #0f172a;
+      color: #ffffff;
+      border: none;
+      padding: 0.42rem 0.85rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-interest:hover { background: #334155; }
 
-    @media (max-width: 640px) {
-      .idea-grid { grid-template-columns: 1fr; }
-      .filter-bar { flex-direction: column; }
-      .filter-bar input { min-width: 100%; }
-      .dashbord-header { padding: 1.25rem; }
+    @media (max-width: 768px) {
+      .p-sidebar { display: none; }
+      .p-main { margin-left: 0; }
+      .p-content { padding: 1.2rem; }
     }
   </style>
 </head>
-<body class="dash-body">
+<body class="proj-dash">
 
-  <!-- Navbar -->
-  <nav class="dash-nav">
-    <div class="dash-wrap">
-      <a href="{% url 'home' %}" class="dash-logo">
-        <img src="{% static 'images/logo.png' %}" alt="Logo">
-        <span>IdeaPartnerHub</span>
-      </a>
+  <!-- Left Icon Sidebar (Matches 2nd Image) -->
+  <aside class="p-sidebar">
+    <a href="{% url 'home' %}" class="p-side-logo" title="Home">
+      <img src="{% static 'images/logo.png' %}" alt="Logo">
+    </a>
+    <div class="p-side-icons">
+      <a href="{% url 'dashboard' %}" class="active" title="All Projects">📁</a>
+      <a href="{% url 'post_idea' %}" title="Post Idea">➕</a>
+      <a href="{% url 'find_team_register' %}" title="Find Teammate">👥</a>
+      <a href="{% url 'home' %}" title="Home">🏠</a>
+    </div>
+    <div class="p-side-bottom">
+      <div class="p-avatar" title="{{ user.email }}">IH</div>
+    </div>
+  </aside>
 
-      <div class="dash-nav-links">
+  <!-- Main Workspace -->
+  <div class="p-main">
+    <!-- Top Tabs Bar -->
+    <header class="p-topbar">
+      <div class="p-tabs">
+        <a href="{% url 'dashboard' %}" class="active">Projects</a>
+        <a href="{% url 'post_idea' %}">Post Idea</a>
+        <a href="{% url 'find_team_register' %}">Find Teammates</a>
         <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'find_team_register' %}">Find Teammate</a>
+      </div>
+
+      <div>
         {% if user.is_authenticated %}
-          <form method="post" action="{% url 'logout' %}" style="margin: 0;">
+          <form method="post" action="{% url 'logout' %}" style="margin:0;">
             {% csrf_token %}
-            <button type="submit" class="d-btn d-btn-danger">Log out</button>
+            <button type="submit" class="p-logout-btn">Log out</button>
           </form>
         {% else %}
-          <a href="{% url 'signup' %}" class="d-btn d-btn-primary">Sign up</a>
+          <a href="{% url 'login' %}" style="text-decoration:none; font-weight:600; color:#0f172a; font-size:0.9rem;">Log in</a>
         {% endif %}
       </div>
-    </div>
-  </nav>
+    </header>
 
-  <div class="dash-wrap">
-    <!-- Messages -->
-    {% if messages %}
-      <div class="messages">
-        {% for message in messages %}
-          <p class="{{ message.tags }}">{{ message }}</p>
-        {% endfor %}
-      </div>
-    {% endif %}
-
-    <!-- Dashboard Header -->
-    <div class="dashbord-header">
-      <div>
-        <h2>Investor Dashboard</h2>
-        <p>Browse new ideas from student founders and connect with promising teams.</p>
-      </div>
-      <a href="{% url 'post_idea' %}" class="d-btn d-btn-primary">+ Post an Idea</a>
-    </div>
-
-    <!-- Filter Bar (Works with your Dashboard.js) -->
-    <div class="filter-bar">
-      <select id="filter-category">
-        <option value="">All categories</option>
-        {% for value, label in category_choices %}
-          <option value="{{ value }}">{{ label }}</option>
-        {% endfor %}
-      </select>
-      <select id="filter-stage">
-        <option value="">All stages</option>
-        {% for value, label in stage_choices %}
-          <option value="{{ value }}">{{ label }}</option>
-        {% endfor %}
-      </select>
-      <input type="text" id="filter-search" placeholder="Search ideas by title or keyword...">
-    </div>
-
-    <!-- Ideas Grid -->
-    <div class="idea-grid">
-      {% for idea in ideas %}
-        <div class="idea-card" data-category="{{ idea.category }}" data-stage="{{ idea.stage }}">
-          <div class="top-row">
-            <h3>{{ idea.title }}</h3>
-            <span class="stage-badge">{{ idea.get_stage_display }}</span>
-          </div>
-
-          <p class="desc">{{ idea.description }}</p>
-
-          <div class="meta">
-            <strong>{{ idea.name }}</strong> · <span class="category-badge">{{ idea.get_category_display }}</span>
-            {% if idea.college %} · {{ idea.college }}{% endif %}
-          </div>
-
-          {% if idea.help_needed_list %}
-            <div class="help-tags">
-              {% for tag in idea.help_needed_list %}
-                <span class="help-tag">{{ tag }}</span>
-              {% endfor %}
-            </div>
-          {% endif %}
-
-          <div class="contact-row">
-            <span>Managed via <strong>Hub Admin</strong></span>
-            <form method="POST" action="{% url 'express_interest' idea.id %}" style="margin: 0;">
-              {% csrf_token %}
-              <button type="submit" class="d-btn d-btn-primary" style="padding: 0.45rem 0.9rem; font-size: 0.82rem;">Express Interest</button>
-            </form>
-          </div>
-        </div>
-      {% empty %}
+    <div class="p-content">
+      {% if messages %}
+        <div style="margin-bottom:1.2rem;">
+          {% for message in messages %}
