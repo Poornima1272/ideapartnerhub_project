@@ -5,23 +5,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Sign up — IdeaPartnerHub</title>
-  <link rel="preconnect" href="https://googleapis.com">
-  <link rel="preconnect" href="https://gstatic.com" crossorigin>
-  <link href="https://googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'Style.css' %}">
   <style>
-    .stu-nav {
-      background: #ffffff;
-      border-bottom: 1px solid #e2e8f0;
-      position: sticky;
-      top: 0;
-      z-index: 50;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body.stu-modern {
+      font-family: 'Instrument Sans', sans-serif;
+      background: radial-gradient(circle at 80% 15%, #3b2d8b 0%, #17153b 48%, #0b0a1f 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    .stu-nav-wrap {
-      max-width: 1140px;
+
+    /* Navbar */
+    .stu-nav {
+      max-width: 1180px;
+      width: 100%;
       margin: 0 auto;
-      padding: 0 20px;
-      height: 70px;
+      padding: 1.3rem 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -33,125 +37,273 @@
       text-decoration: none;
       font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 700;
-      font-size: 1.25rem;
-      color: #0c447c;
+      font-size: 1.3rem;
+      color: #ffffff;
     }
     .stu-logo img {
       height: 36px;
+      border-radius: 6px;
     }
     .stu-links {
       display: flex;
       align-items: center;
-      gap: 1.2rem;
+      gap: 1.4rem;
     }
-    .stu-links a {
+    .stu-links a.nav-item {
       text-decoration: none;
-      color: #475569;
+      color: #cbd5e1;
       font-weight: 500;
       font-size: 0.95rem;
+      transition: color 0.2s;
     }
-    .stu-links a:hover {
-      color: #0c447c;
+    .stu-links a.nav-item:hover {
+      color: #ffffff;
     }
-    .stu-btn {
-      padding: 0.55rem 1.15rem;
-      border-radius: 8px;
+    .stu-btn-white {
+      padding: 0.55rem 1.2rem;
+      border-radius: 10px;
       font-weight: 600;
       font-size: 0.9rem;
       text-decoration: none;
-      background: #0c447c;
-      color: #ffffff !important;
+      background: #ffffff;
+      color: #0f172a !important;
+      transition: transform 0.2s;
     }
-    .stu-msg p {
+    .stu-btn-white:hover {
+      transform: translateY(-2px);
+    }
+
+    /* Main Card Container */
+    .stu-wrap {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 2rem 20px 4.5rem;
+    }
+    .stu-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 22px;
+      padding: 2.6rem 2.4rem;
+      width: 100%;
+      max-width: 620px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+    }
+    .stu-badge {
+      display: inline-block;
+      background: #eef2ff;
+      color: #4338ca;
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .stu-card h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.95rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 0.4rem;
+    }
+    .stu-card p.sub {
+      color: #475569;
+      font-size: 0.95rem;
+      margin-bottom: 1.8rem;
+    }
+
+    /* Django Messages */
+    .stu-messages p {
       padding: 0.8rem 1rem;
       border-radius: 10px;
-      background: #dbeafe;
-      color: #0c447c;
+      background: #eef2ff;
+      color: #4338ca;
       font-size: 0.9rem;
       margin-bottom: 1.2rem;
+      font-weight: 500;
     }
-    .stu-msg p.error {
+    .stu-messages p.error {
       background: #fee2e2;
       color: #dc2626;
     }
+
+    /* Form Fields */
+    .stu-group {
+      margin-bottom: 1.25rem;
+    }
+    .stu-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .stu-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #1e293b;
+      margin-bottom: 0.45rem;
+    }
+    .stu-input-wrap {
+      position: relative;
+    }
+    .stu-group input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #f8fafc;
+      color: #0f172a;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .stu-group input:focus {
+      outline: none;
+      border-color: #4338ca;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.14);
+    }
+    .toggle-pwd {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #64748b;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* Submit Button */
+    .stu-submit {
+      width: 100%;
+      padding: 0.92rem;
+      border-radius: 12px;
+      border: none;
+      background: #17153b;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.4rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .stu-submit:hover {
+      background: #4338ca;
+      transform: translateY(-1px);
+    }
+
+    .stu-switch {
+      text-align: center;
+      margin-top: 1.6rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.92rem;
+      color: #475569;
+    }
+    .stu-switch a {
+      color: #4338ca;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .stu-switch a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+      .stu-row { grid-template-columns: 1fr; gap: 0; }
+      .stu-card { padding: 2rem 1.4rem; }
+    }
   </style>
 </head>
-<body>
+<body class="stu-modern">
 
-  <!-- Modern Navigation Bar -->
+  <!-- Navbar -->
   <nav class="stu-nav">
-    <div class="stu-nav-wrap">
-      <a href="{% url 'home' %}" class="stu-logo">
-        <img src="{% static 'images/logo.png' %}" alt="Logo">
-        <span>IdeaPartnerHub</span>
-      </a>
+    <a href="{% url 'home' %}" class="stu-logo">
+      <img src="{% static 'images/logo.png' %}" alt="Logo">
+      <span>IdeaPartnerHub</span>
+    </a>
 
-      <div class="stu-links">
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'login' %}">Log in</a>
-        <a href="{% url 'signup' %}" class="stu-btn">Sign up</a>
-      </div>
+    <div class="stu-links">
+      <a href="{% url 'home' %}" class="nav-item">Home</a>
+      <a href="{% url 'login' %}" class="nav-item">Log in</a>
+      <a href="{% url 'signup' %}" class="stu-btn-white">Roles</a>
     </div>
   </nav>
 
-  <!-- Main Form Section -->
-  <main class="page">
-    <div class="wrap medium">
-      <form class="form-card" method="POST" action="{% url 'student_signup' %}">
-        {% csrf_token %}
-        <h1 class="form-title">Sign up as a Student</h1>
-        <p class="form-note">
-          Fill in these details once — you won't have to fill them again next time.
-        </p>
+  <!-- Main Form Card -->
+  <main class="stu-wrap">
+    <form class="stu-card" method="POST" action="{% url 'student_signup' %}">
+      {% csrf_token %}
+      <span class="stu-badge">🎓 STUDENT FOUNDER</span>
+      <h1>Sign up as a Student</h1>
+      <p class="sub">Fill in these details once — you won't have to fill them again next time.</p>
 
-        <!-- Django Backend Messages -->
-        {% if messages %}
-          <div class="stu-msg">
-            {% for message in messages %}
-              <p class="{{ message.tags }}">{{ message }}</p>
-            {% endfor %}
-          </div>
-        {% endif %}
-
-        <div class="form-group">
-          <label for="name">Full name</label>
-          <input type="text" id="name" name="name" placeholder="e.g., Riya Sharma" required>
+      {% if messages %}
+        <div class="stu-messages">
+          {% for message in messages %}
+            <p class="{{ message.tags }}">{{ message }}</p>
+          {% endfor %}
         </div>
+      {% endif %}
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="phone">Phone number</label>
-            <input type="text" id="phone" name="phone" placeholder="10-digit number" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email (optional)</label>
-            <input type="email" id="email" name="email" placeholder="you@example.com">
-          </div>
+      <div class="stu-group">
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="name" placeholder="e.g., Riya Sharma" required>
+      </div>
+
+      <div class="stu-row">
+        <div class="stu-group">
+          <label for="phone">Phone number</label>
+          <input type="text" id="phone" name="phone" placeholder="10-digit number" required>
         </div>
+        <div class="stu-group">
+          <label for="email">Email (optional)</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com">
+        </div>
+      </div>
 
-        <div class="form-group">
-          <label for="password">Create Password</label>
+      <div class="stu-group">
+        <label for="password">Create Password</label>
+        <div class="stu-input-wrap">
           <input type="password" id="password" name="password" placeholder="Minimum 6 characters" required>
+          <button type="button" class="toggle-pwd" id="togglePwd">Show</button>
         </div>
+      </div>
 
-        <div class="form-group">
-          <label for="college">College name</label>
-          <input type="text" id="college" name="college" placeholder="e.g., IIT Indore" required>
-        </div>
+      <div class="stu-group">
+        <label for="college">College name</label>
+        <input type="text" id="college" name="college" placeholder="e.g., IIT Indore" required>
+      </div>
 
-        <div class="form-group">
-          <label for="skill">Your skills / areas of expertise</label>
-          <input type="text" id="skill" name="skill" placeholder="e.g., Coding, Design, Marketing">
-        </div>
+      <div class="stu-group">
+        <label for="skill">Your skills / areas of expertise</label>
+        <input type="text" id="skill" name="skill" placeholder="e.g., Coding, Design, Marketing">
+      </div>
 
-        <button type="submit" class="btn btn-primary btn-block">Sign up and post idea</button>
+      <button type="submit" class="stu-submit">Sign up and post idea →</button>
 
-        <p class="auth-switch">
-          Already have an account? <a href="{% url 'login' %}">Log in here</a>
-        </p>
-      </form>
-    </div>
+      <div class="stu-switch">
+        Already have an account? <a href="{% url 'login' %}">Log in here</a>
+      </div>
+    </form>
   </main>
 
+  <script>
+    const toggleBtn = document.getElementById("togglePwd");
+    const pwdInput = document.getElementById("password");
+    if (toggleBtn && pwdInput) {
+      toggleBtn.addEventListener("click", () => {
+        const isHidden = pwdInput.type === "password";
+        pwdInput.type = isHidden ? "text" : "password";
+        toggleBtn.textContent = isHidden ? "Hide" : "Show";
+      });
+    }
+  </script>
 </body>
 </html>

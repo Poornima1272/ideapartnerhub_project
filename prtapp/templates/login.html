@@ -1,42 +1,284 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log in — IdeaPartnerHub</title>
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'Style.css' %}">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body.lg-modern {
+      font-family: 'Instrument Sans', sans-serif;
+      background: radial-gradient(circle at 80% 15%, #3b2d8b 0%, #17153b 48%, #0b0a1f 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-{% block title %}Log in — IdeaPartnerHub{% endblock %}
+    /* Navbar (Matches Home & Signup) */
+    .lg-nav {
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.3rem 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .lg-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #ffffff;
+    }
+    .lg-logo img {
+      height: 36px;
+      border-radius: 6px;
+    }
+    .lg-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .lg-links a.nav-item {
+      text-decoration: none;
+      color: #cbd5e1;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .lg-links a.nav-item:hover {
+      color: #ffffff;
+    }
+    .lg-btn-signup {
+      padding: 0.55rem 1.25rem;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      text-decoration: none;
+      background: #ffffff;
+      color: #0f172a !important;
+      transition: transform 0.2s;
+    }
+    .lg-btn-signup:hover {
+      transform: translateY(-2px);
+    }
 
-{% block content %}
-<div class="iph-form-container">
-  <div class="iph-form-card">
-    <div class="iph-form-header">
-      <h2>Log in to your account</h2>
-      <p>Enter your registered email and password to continue.</p>
+    /* Center Login Card */
+    .lg-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 20px 4rem;
+    }
+    .lg-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 22px;
+      padding: 2.6rem 2.3rem;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+    }
+    .lg-badge {
+      display: inline-block;
+      background: #eef2ff;
+      color: #4338ca;
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+    .lg-card h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 0.4rem;
+    }
+    .lg-card p.sub {
+      color: #475569;
+      font-size: 0.95rem;
+      margin-bottom: 1.8rem;
+    }
+
+    /* Django Messages */
+    .lg-messages p {
+      padding: 0.8rem 1rem;
+      border-radius: 10px;
+      background: #eef2ff;
+      color: #4338ca;
+      font-size: 0.9rem;
+      margin-bottom: 1.2rem;
+      font-weight: 500;
+    }
+    .lg-messages p.error {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    /* Form Fields */
+    .lg-group {
+      margin-bottom: 1.25rem;
+    }
+    .lg-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #1e293b;
+      margin-bottom: 0.45rem;
+    }
+    .lg-input-wrap {
+      position: relative;
+    }
+    .lg-group input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #f8fafc;
+      color: #0f172a;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .lg-group input:focus {
+      outline: none;
+      border-color: #4338ca;
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(67, 56, 202, 0.14);
+    }
+    .toggle-pwd {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #64748b;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .lg-submit {
+      width: 100%;
+      padding: 0.88rem;
+      border-radius: 12px;
+      border: none;
+      background: #17153b;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.4rem;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .lg-submit:hover {
+      background: #4338ca;
+      transform: translateY(-1px);
+    }
+
+    .lg-switch {
+      text-align: center;
+      margin-top: 1.6rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.92rem;
+      color: #475569;
+    }
+    .lg-switch a {
+      color: #4338ca;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .lg-switch a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .lg-card { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body class="lg-modern">
+
+  <!-- Navbar -->
+  <nav class="lg-nav">
+    <a href="{% url 'home' %}" class="lg-logo">
+      <img src="{% static 'images/logo.png' %}" alt="Logo">
+      <span>IdeaPartnerHub</span>
+    </a>
+
+    <div class="lg-links">
+      <a href="{% url 'home' %}" class="nav-item">Home</a>
+      <a href="{% url 'signup' %}" class="lg-btn-signup">Sign up</a>
     </div>
+  </nav>
 
-    {% if messages %}
-      {% for message in messages %}
-        <div class="iph-alert {% if message.tags == 'error' %}error{% endif %}">
-          {{ message }}
+  <!-- Center Login Box -->
+  <main class="lg-wrap">
+    <div class="lg-card">
+      <span class="lg-badge">👋 WELCOME BACK</span>
+      <h1>Log in to your account</h1>
+      <p class="sub">Enter your registered email and password to access your workspace.</p>
+
+      {% if messages %}
+        <div class="lg-messages">
+          {% for message in messages %}
+            <p class="{{ message.tags }}">{{ message }}</p>
+          {% endfor %}
         </div>
-      {% endfor %}
-    {% endif %}
+      {% endif %}
 
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      
-      <p>
-        <label for="email">Email address</label>
-        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
-      </p>
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
 
-      <p>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
-      </p>
+        <div class="lg-group">
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+        </div>
 
-      <button type="submit" class="iph-btn iph-btn-primary iph-btn-full">Log in</button>
-    </form>
+        <div class="lg-group">
+          <label for="password">Password</label>
+          <div class="lg-input-wrap">
+            <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
+            <button type="button" class="toggle-pwd" id="togglePwd">Show</button>
+          </div>
+        </div>
 
-    <div class="iph-form-footer">
-      Don’t have an account? <a href="{% url 'signup' %}">Sign up here</a>
+        <button type="submit" class="lg-submit">Log in →</button>
+      </form>
+
+      <div class="lg-switch">
+        Don’t have an account? <a href="{% url 'signup' %}">Sign up here</a>
+      </div>
     </div>
-  </div>
-</div>
-{% endblock %}
+  </main>
+
+  <script>
+    const toggleBtn = document.getElementById("togglePwd");
+    const pwdInput = document.getElementById("password");
+    if (toggleBtn && pwdInput) {
+      toggleBtn.addEventListener("click", () => {
+        const isHidden = pwdInput.type === "password";
+        pwdInput.type = isHidden ? "text" : "password";
+        toggleBtn.textContent = isHidden ? "Hide" : "Show";
+      });
+    }
+  </script>
+
+</body>
+</html>

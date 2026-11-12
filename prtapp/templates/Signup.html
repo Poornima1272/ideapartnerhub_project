@@ -10,30 +10,22 @@
   <link href="https://googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'Style.css' %}">
   <style>
-    body.su-body {
-      font-family: 'Instrument Sans', 'Segoe UI', sans-serif;
-      background-color: #f8fafc;
-      color: #0f172a;
-      margin: 0;
-      line-height: 1.6;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body.su-modern {
+      font-family: 'Instrument Sans', sans-serif;
+      background: radial-gradient(circle at 80% 15%, #3b2d8b 0%, #17153b 48%, #0b0a1f 100%);
+      color: #ffffff;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    /* Modern Navigation Bar */
+    /* Navbar */
     .su-nav {
-      background: #ffffff;
-      border-bottom: 1px solid #e2e8f0;
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-    .su-nav-wrap {
-      max-width: 1140px;
+      max-width: 1180px;
+      width: 100%;
       margin: 0 auto;
-      padding: 0 20px;
-      height: 70px;
+      padding: 1.3rem 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -45,156 +37,250 @@
       text-decoration: none;
       font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 700;
-      font-size: 1.25rem;
-      color: #0c447c;
+      font-size: 1.3rem;
+      color: #ffffff;
     }
     .su-logo img {
       height: 36px;
+      border-radius: 6px;
     }
     .su-links {
       display: flex;
       align-items: center;
-      gap: 1.2rem;
+      gap: 1.5rem;
     }
-    .su-links a {
+    .su-links a.nav-item {
       text-decoration: none;
-      color: #475569;
+      color: #cbd5e1;
       font-weight: 500;
       font-size: 0.95rem;
+      transition: color 0.2s;
     }
-    .su-links a:hover {
-      color: #0c447c;
+    .su-links a.nav-item:hover {
+      color: #ffffff;
     }
-    .su-btn {
-      padding: 0.55rem 1.15rem;
-      border-radius: 8px;
+    .su-btn-login {
+      padding: 0.55rem 1.25rem;
+      border-radius: 10px;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       text-decoration: none;
-      background: #0c447c;
-      color: #ffffff !important;
+      background: #ffffff;
+      color: #0f172a !important;
+      transition: transform 0.2s;
+    }
+    .su-btn-login:hover {
+      transform: translateY(-2px);
     }
 
-    /* Role Selection Section */
+    /* Center Content */
     .choose-wrap {
-      max-width: 720px;
+      max-width: 820px;
       width: 100%;
       margin: auto;
-      padding: 3.5rem 20px;
+      padding: 2.5rem 20px 4rem;
       text-align: center;
+    }
+    .su-badge {
+      display: inline-block;
+      background: rgba(165, 180, 252, 0.16);
+      border: 1px solid rgba(165, 180, 252, 0.3);
+      color: #c7d2fe;
+      padding: 0.35rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
     }
     .choose-wrap h1 {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #0f172a;
-      margin: 0 0 0.5rem;
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 0.6rem;
     }
     .choose-wrap > p {
-      color: #475569;
-      font-size: 1.05rem;
-      margin: 0 0 2.5rem;
+      color: #cbd5e1;
+      font-size: 1.08rem;
+      margin-bottom: 2.8rem;
     }
+
+    /* Role Cards */
     .role-cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      gap: 1.8rem;
+      text-align: left;
     }
     .role-card {
       background: #ffffff;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 2.25rem 1.75rem;
+      border-radius: 20px;
+      padding: 2.2rem;
       text-decoration: none;
-      color: inherit;
-      transition: all 0.2s ease;
+      color: #0f172a;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      border: 2px solid transparent;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
     .role-card:hover {
-      border-color: #0c447c;
-      background: #eff6ff;
-      transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(12, 68, 124, 0.1);
+      transform: translateY(-6px);
+      border-color: #818cf8;
+      box-shadow: 0 25px 50px rgba(79, 70, 229, 0.35);
     }
-    .role-card .icon {
-      font-size: 2.75rem;
-      margin-bottom: 1rem;
-      background: #dbeafe;
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
+    .role-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.3rem;
+    }
+    .role-icon {
+      font-size: 2.2rem;
+      width: 62px;
+      height: 62px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: #eef2ff;
+    }
+    .role-card.investor .role-icon {
+      background: #fef3c7;
+    }
+    .role-tag {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      background: #e0e7ff;
+      color: #4338ca;
+    }
+    .role-card.investor .role-tag {
+      background: #fef3c7;
+      color: #b45309;
     }
     .role-card h3 {
       font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.3rem;
-      margin: 0 0 0.5rem;
+      font-size: 1.45rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
       color: #0f172a;
     }
     .role-card p {
       font-size: 0.95rem;
       color: #475569;
-      margin: 0;
-      line-height: 1.5;
+      line-height: 1.55;
+      margin-bottom: 1.3rem;
     }
-    .su-login-note {
-      margin-top: 2rem;
+    .role-perks {
+      list-style: none;
+      margin-bottom: 1.6rem;
+      flex-grow: 1;
+    }
+    .role-perks li {
+      font-size: 0.88rem;
+      color: #334155;
+      margin-bottom: 0.45rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .role-perks li::before {
+      content: "✓";
+      color: #10b981;
+      font-weight: 800;
+    }
+    .role-cta {
+      width: 100%;
+      padding: 0.78rem 1.2rem;
+      border-radius: 10px;
+      background: #17153b;
+      color: #ffffff;
+      font-weight: 600;
       font-size: 0.95rem;
-      color: #475569;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .role-card:hover .role-cta {
+      background: #4338ca;
+    }
+
+    /* Footer Switch */
+    .su-login-note {
+      margin-top: 2.5rem;
+      font-size: 0.95rem;
+      color: #cbd5e1;
     }
     .su-login-note a {
-      color: #0c447c;
+      color: #a5b4fc;
       font-weight: 600;
       text-decoration: none;
+      margin-left: 4px;
     }
     .su-login-note a:hover {
       text-decoration: underline;
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 700px) {
       .role-cards { grid-template-columns: 1fr; }
-      .choose-wrap h1 { font-size: 1.8rem; }
+      .choose-wrap h1 { font-size: 2.1rem; }
     }
   </style>
 </head>
-<body class="su-body">
+<body class="su-modern">
 
-  <!-- Modern Navigation Bar -->
+  <!-- Navbar -->
   <nav class="su-nav">
-    <div class="su-nav-wrap">
-      <a href="{% url 'home' %}" class="su-logo">
-        <img src="{% static 'images/logo.png' %}" alt="Logo">
-        <span>IdeaPartnerHub</span>
-      </a>
+    <a href="{% url 'home' %}" class="su-logo">
+      <img src="{% static 'images/logo.png' %}" alt="Logo">
+      <span>IdeaPartnerHub</span>
+    </a>
 
-      <div class="su-links">
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'login' %}" class="su-btn">Log in</a>
-      </div>
+    <div class="su-links">
+      <a href="{% url 'home' %}" class="nav-item">Home</a>
+      <a href="{% url 'login' %}" class="su-btn-login">Log in</a>
     </div>
   </nav>
 
   <!-- Main Role Selection -->
   <div class="choose-wrap">
+    <span class="su-badge">✨ JOIN IDEAPARTNERHUB</span>
     <h1>Who are you?</h1>
-    <p>Choose your role to get started on the right path.</p>
+    <p>Choose your role to unlock your workspace and start building.</p>
 
     <div class="role-cards">
-      <a href="{% url 'student_signup' %}" class="role-card">
-        <div class="icon">🎓</div>
+      <!-- Student Card -->
+      <a href="{% url 'student_signup' %}" class="role-card student">
+        <div class="role-top">
+          <div class="role-icon">🎓</div>
+          <span class="role-tag">100% Free</span>
+        </div>
         <h3>I am a Student</h3>
-        <p>I have a startup idea and need a team, skills, or mentorship.</p>
+        <p>Turn your startup idea or hackathon project into reality with the right team.</p>
+        <ul class="role-perks">
+          <li>Post startup ideas & find co-founders</li>
+          <li>Join active hackathon teams</li>
+          <li>Pitch directly to angel investors</li>
+        </ul>
+        <div class="role-cta">Continue as Student →</div>
       </a>
 
-      <a href="{% url 'investor_signup' %}" class="role-card">
-        <div class="icon">💰</div>
+      <!-- Investor Card -->
+      <a href="{% url 'investor_signup' %}" class="role-card investor">
+        <div class="role-top">
+          <div class="role-icon">💰</div>
+          <span class="role-tag">Early Access</span>
+        </div>
         <h3>I am an Investor</h3>
-        <p>I want to explore promising student ideas and connect with founders.</p>
+        <p>Discover high-potential student founders and early-stage prototypes.</p>
+        <ul class="role-perks">
+          <li>Browse curated student startup ideas</li>
+          <li>Filter projects by stage & category</li>
+          <li>Connect directly with founding teams</li>
+        </ul>
+        <div class="role-cta">Continue as Investor →</div>
       </a>
     </div>
 
