@@ -16,7 +16,15 @@ from django.contrib.auth import login, authenticate, logout
 template_name = "registration/signup.html"
 
 def home(request):
-    return render(request, "index.html")
+    ideas_count = Idea.objects.count()
+    investors_count = Investor.objects.count()
+    students_count = Student.objects.count()
+    return render(request, "index.html", {
+        "ideas_count": ideas_count,
+        "investors_count": investors_count,
+        "students_count": students_count,
+    })
+
 
 
 def signup(request):
