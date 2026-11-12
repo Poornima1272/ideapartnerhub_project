@@ -377,3 +377,48 @@
             {% endfor %}
           </select>
 
+          <input type="text" id="filter-search" placeholder="Search projects...">
+        </div>
+      </div>
+
+      <div class="idea-grid">
+        {% for idea in ideas %}
+          <div class="idea-card" data-category="{{ idea.category }}" data-stage="{{ idea.stage }}">
+            <div class="card-top-badge">
+              <div class="circle-icon">{{ idea.title|slice:":2" }}</div>
+              <span class="stage-time">{{ idea.get_stage_display }}</span>
+            </div>
+
+            <div class="founder-sub">{{ idea.name }}{% if idea.college %} • {{ idea.college }}{% endif %}</div>
+            <h3>{{ idea.title }}</h3>
+            <p class="desc">{{ idea.description }}</p>
+
+            {% if idea.help_needed_list %}
+              <div class="help-tags">
+                {% for tag in idea.help_needed_list %}
+                  <span class="help-tag">{{ tag }}</span>
+                {% endfor %}
+              </div>
+            {% endif %}
+
+            <div class="card-action">
+              <span class="cat-label">{{ idea.get_category_display }}</span>
+              <form method="POST" action="{% url 'express_interest' idea.id %}" style="margin:0;">
+                {% csrf_token %}
+                <button type="submit" class="btn-interest">Connect</button>
+              </form>
+            </div>
+          </div>
+        {% empty %}
+          <div style="grid-column:1/-1; background:#fff; padding:3rem; text-align:center; border-radius:8px; color:#64748b;">
+            <h3>No projects found</h3>
+            <p style="margin-top:0.4rem;">Click <strong>+ New project</strong> above to post the first startup idea!</p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'Dashboard.js' %}"></script>
+</body>
+</html>
