@@ -21,7 +21,7 @@ urlpatterns = [
 
     path('verify-otp/', views.verify_otp, name='verify_otp'),
 
-
+    path('profile/', views.my_profile, name='my_profile'),
 ] 
 
 
