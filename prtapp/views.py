@@ -32,7 +32,8 @@ def student_signup(request):
             messages.error(request, "Please fill all fields including Email for OTP verification.")
             return render(request, "Student signup.html")
 
-        if User.objects.filter(username=email).exists():
+        if email and User.objects.filter(username__iexact=email).exists():
+
             messages.error(request, "This email is already registered. Please log in.")
             return render(request, "Student signup.html")
 
