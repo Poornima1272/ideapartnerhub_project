@@ -11,7 +11,8 @@ from .models import ConnectionRequest, Idea, Investor , TeamFinder
 
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
-
+import random
+from django.core.mail import send_mail
 
 template_name = "registration/signup.html"
 
@@ -319,3 +320,144 @@ def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out successfully.")
     return redirect("home")
+
+
+# 1. Student Signup (अब यह सीधे अकाउंट बनाने के बजाय OTP भेजेगा)
+def student_signup(request):
+    if request.method == "POST":
+        name = request.POST.get("name", "").strip()
+        phone = request.POST.get("phone", "").strip()
+        college = request.POST.get("college", "").strip()
+        email = request.POST.get("email", "").strip()
+        password = request.POST.get("password", "")
+        skill = request.POST.get("skill", "").strip()
+
+        if not name or not phone or not college or not email or not password:
+            messages.error(request, "Please fill all fields including Email for OTP verification.")
+            return render(request, "Student signup.html")
+
+        if User.objects.filter(username=email).exists():
+            messages.error(request, "This email is already registered. Please log in.")
+            return render(request, "Student signup.html")
+
+        otp = str(random.randint(100000, 999999))
+        request.session["signup_data"] = {
+            "role": "student",
+            "name": name,
+            "phone": phone,
+            "college": college,
+            "email": email,
+            "password": password,
+            "skill": skill,
+        }
+        request.session["signup_otp"] = otp
+
+        send_mail(
+            subject="Your IdeaPartnerHub Verification OTP",
+            message=f"Hi {name},\n\nYour 6-digit OTP to verify your IdeaPartnerHub account is: {otp}\n\nThank you!",
+            from_email=None,
+            recipient_list=[email],
+            fail_silently=False,
+        )
+        messages.success(request, f"We have sent a 6-digit OTP to {email}.")
+        return redirect("verify_otp")
+
+    return render(request, "Student signup.html")
+
+
+# 2. Investor Signup (अब यह भी OTP भेजेगा)
+def investor_signup(request):
+    if request.method == "POST":
+        name = request.POST.get("name", "").strip()
+        phone = request.POST.get("phone", "").strip()
+        occupation = request.POST.get("occupation", "").strip()
+        email = request.POST.get("email", "").strip()
+        password = request.POST.get("password", "")
+        interest_area = request.POST.get("interest_area", "").strip()
+
+        if not name or not phone or not occupation or not email or not password:
+            messages.error(request, "Please fill all fields including Email for OTP verification.")
+            return render(request, "Investor signup.html")
+
+        if User.objects.filter(username=email).exists():
+            messages.error(request, "This email is already registered. Please log in.")
+            return render(request, "Investor signup.html")
+
+        otp = str(random.randint(100000, 999999))
+        request.session["signup_data"] = {
+            "role": "investor",
+            "name": name,
+            "phone": phone,
+            "occupation": occupation,
+            "email": email,
+            "password": password,
+            "interest_area": interest_area,
+        }
+        request.session["signup_otp"] = otp
+
+        send_mail(
+            subject="Your IdeaPartnerHub Verification OTP",
+            message=f"Hi {name},\n\nYour 6-digit OTP to verify your Investor account is: {otp}\n\nThank you!",
+            from_email=None,
+            recipient_list=[email],
+            fail_silently=False,
+        )
+        messages.success(request, f"We have sent a 6-digit OTP to {email}.")
+        return redirect("verify_otp")
+
+    return render(request, "Investor signup.html")
+
+
+# 3. नया OTP Verification फंक्शन
+def verify_otp(request):
+    signup_data = request.session.get("signup_data")
+    saved_otp = request.session.get("signup_otp")
+
+    if not signup_data or not saved_otp:
+        messages.error(request, "Session expired. Please sign up again.")
+        return redirect("signup")
+
+    if request.method == "POST":
+        entered_otp = request.POST.get("otp", "").strip()
+
+        if entered_otp == saved_otp:
+            user = User.objects.create_user(
+                username=signup_data["email"],
+                email=signup_data["email"],
+                password=signup_data["password"],
+            )
+
+            if signup_data["role"] == "student":
+                student = Student.objects.create(
+                    user=user,
+                    name=signup_data["name"],
+                    phone=signup_data["phone"],
+                    email=signup_data["email"],
+                    college=signup_data["college"],
+                    skill=signup_data["skill"],
+                )
+                login(request, user)
+                request.session["student_id"] = student.id
+                del request.session["signup_data"]
+                del request.session["signup_otp"]
+                messages.success(request, f"Email verified! Welcome {student.name}.")
+                return redirect("post_idea")
+
+            elif signup_data["role"] == "investor":
+                Investor.objects.create(
+                    user=user,
+                    name=signup_data["name"],
+                    phone=signup_data["phone"],
+                    email=signup_data["email"],
+                    occupation=signup_data["occupation"],
+                    interest_area=signup_data["interest_area"],
+                )
+                login(request, user)
+                del request.session["signup_data"]
+                del request.session["signup_otp"]
+                messages.success(request, f"Email verified! Welcome {signup_data['name']}.")
+                return redirect("dashboard")
+        else:
+            messages.error(request, "Invalid OTP. Please check your email and try again.")
+
+    return render(request, "verify_otp.html", {"email": signup_data["email"]})

@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify OTP — IdeaPartnerHub</title>
+  <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: radial-gradient(circle at 80% 15%, #3b2d8b 0%, #17153b 48%, #0b0a1f 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .otp-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 22px;
+      padding: 2.5rem 2.2rem;
+      width: 100%;
+      max-width: 430px;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+    }
+    .badge {
+      display: inline-block;
+      background: #eef2ff;
+      color: #4338ca;
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 0.9rem;
+    }
+    h1 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 1.85rem; margin-bottom: 0.5rem; }
+    p.sub { color: #475569; font-size: 0.94rem; margin-bottom: 1.6rem; }
+    .msg p { padding: 0.75rem; border-radius: 10px; background: #eef2ff; color: #4338ca; font-size: 0.88rem; margin-bottom: 1rem; }
+    .msg p.error { background: #fee2e2; color: #dc2626; }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.9rem;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 8px;
+      text-align: center;
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      background: #f8fafc;
+      margin-bottom: 1.3rem;
+    }
+    input[type="text"]:focus { outline: none; border-color: #4338ca; background: #fff; }
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: 12px;
+      border: none;
+      background: #17153b;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: #4338ca; }
+    .back { display: block; margin-top: 1.3rem; font-size: 0.88rem; color: #64748b; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="otp-card">
+    <span class="badge">🔐 EMAIL VERIFICATION</span>
+    <h1>Enter 6-Digit OTP</h1>
+    <p class="sub">We sent a verification code to <strong>{{ email }}</strong></p>
+
+    {% if messages %}
+      <div class="msg">
+        {% for message in messages %}
+          <p class="{{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'verify_otp' %}">
+      {% csrf_token %}
+      <input type="text" name="otp" maxlength="6" placeholder="000000" required>
+      <button type="submit">Verify & Create Account →</button>
+    </form>
+
+    <a href="{% url 'signup' %}" class="back">← Wrong email? Go back</a>
+  </div>
+</body>
+</html>

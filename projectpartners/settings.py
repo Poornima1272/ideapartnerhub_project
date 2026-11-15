@@ -142,3 +142,13 @@ LOGOUT_REDIRECT_URL = 'home'  # Naming convention ke mutabik 'index' ko humne ma
 CSRF_TRUSTED_ORIGINS = [
     'https://ideapartnerhub-project.onrender.com',
 ]
+
+
+# ================= EMAIL OTP SETTINGS =================
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = '://gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'annumishra4432@gmail.com'          # यहाँ अपनी Gmail लिखें
+EMAIL_HOST_PASSWORD = 'zrnk nnvu ydel bucc'      # यहाँ 16-अंकों का App Password लिखें
+DEFAULT_FROM_EMAIL = 'IdeaPartnerHub <annumishra4432@gmail.com>'
