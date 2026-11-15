@@ -14,7 +14,8 @@ def send_otp_email(to_email, user_name, otp):
     if not api_key:
         return False, "BREVO_API_KEY is missing in Render Environment!"
 
-    url = "https://brevo.com"
+    url =  "https://api." + "brevo.com" + "/v3/smtp/email"
+
 
     headers = {
         "accept": "application/json",
