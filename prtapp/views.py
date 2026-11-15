@@ -18,7 +18,7 @@ def send_otp_email(to_email, user_name, otp):
 
     headers = {
         "accept": "application/json",
-        "api-key": api_key,
+        "api-key": os.environ.get("BREVO_API_KEY", "").strip(),
         "content-type": "application/json",
     }
     data = {
