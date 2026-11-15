@@ -1,10 +1,29 @@
+
+import os
 import random
+import requests
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from .models import Idea, Student, Investor, ConnectionRequest, TeamFinder
+
+
+def send_otp_email(to_email, user_name, otp):
+    url = "https://brevo.com"
+    headers = {
+        "accept": "application/json",
+        "api-key": os.environ.get("BREVO_API_KEY", ""),
+        "content-type": "application/json",
+    }
+    data = {
+        "sender": {"name": "IdeaPartnerHub", "email": "annumishra4432@gmail.com"},
+        "to": [{"email": to_email, "name": user_name}],
+        "subject": "Your IdeaPartnerHub Verification OTP",
+        "htmlContent": f"<h3>Hi {user_name},</h3><p>Your 6-digit OTP to verify your IdeaPartnerHub account is: <strong style='font-size:22px; color:#4f46e5;'>{otp}</strong></p>",
+    }
+    response = requests.post(url, json=data, headers=headers, timeout=10)
+    return response.status_code in (200, 201, 202)
 
 
 def home(request):
@@ -33,7 +52,6 @@ def student_signup(request):
             return render(request, "Student signup.html")
 
         if email and User.objects.filter(username__iexact=email).exists():
-
             messages.error(request, "This email is already registered. Please log in.")
             return render(request, "Student signup.html")
 
@@ -49,15 +67,12 @@ def student_signup(request):
         }
         request.session["signup_otp"] = otp
 
-        send_mail(
-            subject="Your IdeaPartnerHub Verification OTP",
-            message=f"Hi {name},\n\nYour 6-digit OTP to verify your IdeaPartnerHub account is: {otp}\n\nThank you!",
-            from_email=None,
-            recipient_list=[email],
-            fail_silently=False,
-        )
-        messages.success(request, f"We have sent a 6-digit OTP to {email}.")
-        return redirect("verify_otp")
+        if send_otp_email(email, name, otp):
+            messages.success(request, f"We have sent a 6-digit OTP to {email}.")
+            return redirect("verify_otp")
+        else:
+            messages.error(request, "Could not send OTP email. Please check your email address and try again.")
+            return render(request, "Student signup.html")
 
     return render(request, "Student signup.html")
 
@@ -75,7 +90,7 @@ def investor_signup(request):
             messages.error(request, "Please fill all fields including Email for OTP verification.")
             return render(request, "Investor signup.html")
 
-        if User.objects.filter(username=email).exists():
+        if email and User.objects.filter(username__iexact=email).exists():
             messages.error(request, "This email is already registered. Please log in.")
             return render(request, "Investor signup.html")
 
@@ -91,15 +106,12 @@ def investor_signup(request):
         }
         request.session["signup_otp"] = otp
 
-        send_mail(
-            subject="Your IdeaPartnerHub Verification OTP",
-            message=f"Hi {name},\n\nYour 6-digit OTP to verify your Investor account is: {otp}\n\nThank you!",
-            from_email=None,
-            recipient_list=[email],
-            fail_silently=False,
-        )
-        messages.success(request, f"We have sent a 6-digit OTP to {email}.")
-        return redirect("verify_otp")
+        if send_otp_email(email, name, otp):
+            messages.success(request, f"We have sent a 6-digit OTP to {email}.")
+            return redirect("verify_otp")
+        else:
+            messages.error(request, "Could not send OTP email. Please check your email address and try again.")
+            return render(request, "Investor signup.html")
 
     return render(request, "Investor signup.html")
 
@@ -240,19 +252,28 @@ def express_interest(request, idea_id):
 
 
 def find_team_register(request):
-    student = getattr(request.user, "student_profile", None) if request.user.is_authenticated else None
-    if not student and request.session.get("student_id"):
-        student = Student.objects.filter(id=request.session.get("student_id")).first()
+    return render(request, "Post-idea.html", {"student": student})
 
-    if not student:
-        messages.error(request, "To find a teammate, please first do Student Signup/Login.")
-        return redirect("student_signup")
 
-    if request.method == "POST":
-        hackathon_name = request.POST.get("hackathon_name", "").strip()
-        my_role = request.POST.get("my_role", "").strip()
-        looking_for = request.POST.get("looking_for", "").strip()
-        project_description = request.POST.get("project_description", "").strip()
+def dashboard(request):
+    ideas = Idea.objects.all()
+    category = request.GET.get("category")
+    stage = request.GET.get("stage")
+    search = request.GET.get("search")
+
+    if category:
+        ideas = ideas.filter(category=category)
+    if stage:
+        ideas = ideas.filter(stage=stage)
+    if search:
+        ideas = ideas.filter(title__icontains=search)
+
+    return render(request, "Dashboard.html", {
+        "ideas": ideas,
+        "stage_choices": Idea.STAGE_CHOICES,
+        "category_choices": Idea.CATEGORY_CHOICES,
+    })
+
 
 def express_interest(request, idea_id):
     if request.method == "POST":
