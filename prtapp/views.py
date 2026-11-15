@@ -10,21 +10,31 @@ from .models import Idea, Student, Investor, ConnectionRequest, TeamFinder
 
 
 def send_otp_email(to_email, user_name, otp):
+    api_key = os.environ.get("BREVO_API_KEY", "").strip()
+    if not api_key:
+        return False, "BREVO_API_KEY is missing in Render Environment!"
+
     url = "https://brevo.com"
     headers = {
         "accept": "application/json",
-        "api-key": os.environ.get("BREVO_API_KEY", ""),
+        "api-key": api_key,
         "content-type": "application/json",
     }
     data = {
         "sender": {"name": "IdeaPartnerHub", "email": "annumishra4432@gmail.com"},
         "to": [{"email": to_email, "name": user_name}],
         "subject": "Your IdeaPartnerHub Verification OTP",
-        "htmlContent": f"<h3>Hi {user_name},</h3><p>Your 6-digit OTP to verify your IdeaPartnerHub account is: <strong style='font-size:22px; color:#4f46e5;'>{otp}</strong></p>",
+        "htmlContent": f"<h3>Hi {user_name},</h3><p>Your 6-digit OTP is: <strong style='font-size:22px; color:#4f46e5;'>{otp}</strong></p>",
     }
-    response = requests.post(url, json=data, headers=headers, timeout=10)
-    return response.status_code in (200, 201, 202)
+    try:
+        response = requests.post(url, json=data, headers=headers, timeout=10)
+        if response.status_code in (200, 201, 202):
+            return True, "Sent"
+        return False, f"Brevo Error ({response.status_code}): {response.text}"
+    except Exception as e:
+        return False, str(e)
 
+        
 
 def home(request):
     return render(request, "index.html", {
