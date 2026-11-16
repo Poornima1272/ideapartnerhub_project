@@ -29,7 +29,14 @@ SECRET_KEY = "django-insecure-f+sx(%^4l4xk6+^ja8ca_3v%j6m0^3=6h(egf13fr!hh%=0f40
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'ideapartnerhub-project.onrender.com',
+    'ideapartnerhub.com',
+    'www.ideapartnerhub.com',
+    '127.0.0.1',
+    'localhost',
+]
+
 
 
 # Application definition
@@ -141,7 +148,10 @@ LOGOUT_REDIRECT_URL = 'home'  # Naming convention ke mutabik 'index' ko humne ma
 
 CSRF_TRUSTED_ORIGINS = [
     'https://ideapartnerhub-project.onrender.com',
+    'https://ideapartnerhub.com',
+    'https://ideapartnerhub.com',
 ]
+
 
 
 # ================= EMAIL OTP SETTINGS =================
